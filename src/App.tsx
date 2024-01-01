@@ -10,18 +10,18 @@ export default function App() {
 
   return (
     <>
-      <div className="flex flex-col w-full h-screen overflow-hidden">
-        <div className="flex-grow ">
-          <AnimatePresence>
-            <Routes location={location} key={location.pathname}>
-              {routes.map((route) => (
-                <Route key={route.path} path={route.path} element={<route.component />} />
-              ))}
-            </Routes>
-          </AnimatePresence>
+        <div className="flex flex-col w-full h-screen">
+          <div className="flex-grow">
+            <AnimatePresence>
+              <Routes location={location} key={location.pathname}>
+                {routes.map((route) => (
+                  <Route key={route.path} path={route.path} element={<route.component />} />
+                ))}
+              </Routes>
+            </AnimatePresence>
+          </div>
+          <BottomNav options={bottomNavOptions} />
         </div>
-        <BottomNav options={bottomNavOptions} />
-      </div>
     </>
   );
 }
