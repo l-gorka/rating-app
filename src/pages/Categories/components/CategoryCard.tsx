@@ -1,8 +1,10 @@
-import { Card, CardFooter, Image, Button, Badge } from '@nextui-org/react';
+import { Badge, Card, CardFooter, Image} from '@nextui-org/react';
 
 const CategoryCard = ({
   title,
   image,
+  numberOfItems,
+
 }: {
   id: number;
   title: string;
@@ -10,22 +12,24 @@ const CategoryCard = ({
   numberOfItems: number;
 }) => {
   return (
-      <Card isFooterBlurred>
+    <Badge content={numberOfItems} variant='flat' size='lg' className='mt-2 me-2'>
+      <Card isFooterBlurred radius='sm'>
         <Image
-          removeWrapper
           alt="Card background"
           className="z-0 w-full h-full object-cover"
-          height={300}
+          height={200}
           width={200}
           src={image}
+          radius='sm'
         />
 
-        <CardFooter className="absolute bg-white/30 bottom-0 border-t-1 border-zinc-100/50 z-10 justify-between">
-          <div>
-            <p className="text-black text-small">{title}</p>
+        <CardFooter style={{backgroundColor: 'rgba(0,0,0,0.50)'}} className="absolute bg-black bottom-0 border-t-1 z-10">
+          <div className=''>
+            <p className="text-black text-small bg-black">{title}</p>
           </div>
         </CardFooter>
       </Card>
+      </Badge>
   );
 };
 
