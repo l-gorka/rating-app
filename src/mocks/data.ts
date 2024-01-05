@@ -10,21 +10,21 @@ export const categoriesList: Category[] = [
         id: 1,
         title: 'Star Wars',
         image: 'https://picsum.photos/200/',
-        rating: 5,
+        rating: 5.0,
         text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam, quod, quibusdam.'
       },
       {
         id: 2,
         title: 'Star Wars 2',
         image: 'https://picsum.photos/201/',
-        rating: 4,
+        rating: 4.2,
         text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam, quod, quibusdam.'
       },
       {
         id: 3,
         title: 'Star Wars 3',
         image: 'https://picsum.photos/202/',
-        rating: 3,
+        rating: 3.1,
         text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam, quod, quibusdam.'
       },
     ]
@@ -38,21 +38,21 @@ export const categoriesList: Category[] = [
         id: 1,
         title: 'Star Wars',
         image: 'https://picsum.photos/206/',
-        rating: 5,
+        rating: 2.2,
         text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam, quod, quibusdam.'
       },
       {
         id: 2,
         title: 'Star Wars 2',
         image: 'https://picsum.photos/207/',
-        rating: 4,
+        rating: 4.1,
         text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam, quod, quibusdam.'
       },
       {
         id: 3,
         title: 'Star Wars 3',
         image: 'https://picsum.photos/208/',
-        rating: 3,
+        rating: 1.2,
         text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam, quod, quibusdam.'
       },
     ]

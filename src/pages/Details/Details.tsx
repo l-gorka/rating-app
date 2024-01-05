@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
@@ -8,20 +8,22 @@ import { GoHeart } from 'react-icons/go';
 
 import RouteTransition from 'src/components/transition/RouteTransition';
 
-import StarRating from 'src/components/base/StarRating.tsx';
+import {StarRating} from 'src/components/base/StarRating.tsx';
 import TextField from 'src/components/base/TextField';
 
 export default function Details() {
-  const [windowWidth, setWindowWidth] = useState<number>(1200)
+  const [windowWidth, setWindowWidth] = useState<number>(1200);
 
-  useEffect(() => {
-    setWindowWidth(window.innerWidth);
-  }, []);
-  
   return (
-<RouteTransition compKey='details'>
-      <div className="relative mb-20 h-[100vw]">
-        <Image radius="none" alt="NextUI hero Image" width={windowWidth} height={windowWidth} src="https://picsum.photos/800/800" />
+    <RouteTransition compKey="details">
+      <div className="relative mb-20 w-full aspect-square">
+        <Image
+          radius="none"
+          alt="NextUI hero Image"
+          width={windowWidth}
+          height={windowWidth}
+          src="https://picsum.photos/800/800"
+        />
         <Card
           isBlurred
           radius="lg"

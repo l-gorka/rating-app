@@ -18,8 +18,8 @@ export default function App() {
 
   return (
     <>
-      <div className="flex flex-col w-full h-dvh">
-        <div className="flex-grow overflow-scroll">
+      <div className="flex flex-col w-full h-dvh max-w-screen-sm">
+        <div className="flex-grow overflow-scroll relative">
           <AnimatePresence>
             <Routes location={location} key={location.pathname}>
               {routes.map((route) => (

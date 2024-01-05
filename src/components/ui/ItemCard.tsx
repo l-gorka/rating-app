@@ -17,7 +17,7 @@ export const ItemCard = ({
   return (
       <Card isFooterBlurred radius="sm">
         {showRating && 
-          <div className='absolute top-2 right-2 z-10 w-10 grid place-items-center bg-black/50 text-lg rounded-md'>
+          <div className='absolute top-2 right-2 z-10 p-1 grid place-items-center bg-black/50 text-lg font-bold rounded-md'>
             {rating}
           </div>
         }

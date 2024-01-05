@@ -8,9 +8,6 @@ import { LoadingSpinner } from 'src/components/base/LoadingSpinner';
 
 import { useFetch } from 'src/hooks/useFetch';
 
-import { CategoryOverview } from 'src/types';
-
-
 export default function Category() {
   const params = useParams();
   console.log(params);
