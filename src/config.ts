@@ -3,8 +3,10 @@ import { TbCategoryPlus } from 'react-icons/tb';
 import { FaRegUserCircle } from 'react-icons/fa';
 
 import Home from './pages/Home/Home';
-import Categories from './pages/Categories/Categories';
-import User from './pages/User/User';
+import CategoriesList from 'src/pages/CategoriesList/CategoriesList';
+import Category from 'src/pages/Category/Category';
+import User from 'src/pages/User/User';
+import Details from 'src/pages/Details/Details';
 
 export const bottomNavOptions = [
   {
@@ -30,11 +32,21 @@ export const routes = [
   {
     path: '/categories',
     exact: true,
-    component: Categories,
+    component: CategoriesList,
   },
   {
     path: '/user',
     exact: true,
     component: User,
-  }
+  },
+  {
+    path: '/category/:id',
+    exact: true,
+    component: Category,
+  },
+  {
+    path: '/details/:id',
+    exact: true,
+    component: Details,
+  },
 ]

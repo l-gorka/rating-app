@@ -12,12 +12,12 @@ interface BottomNavItem {
 
 export default function BottomNav({ options }: { options: BottomNavItem[] }) {
   const path = window.location.pathname;
-  
+
   return (
-    <ButtonGroup className="z-10 fixed bottom-0 bg-black/25 left-0 w-full rounded-none backdrop-blur-sm px-12">
+    <ButtonGroup className="z-10 bg-black/25 w-screen rounded-none backdrop-blur-sm px-12">
       {options.map((option) => (
         <Button className="flex-col w-full h-14" key={option.href} variant="light" isIconOnly radius="none">
-          <Link to={option.href} className={`text-white ${path === option.href ? 'text-red-500' : ''}`}>
+          <Link to={option.href} className={`text-white w-full h-full grid place-items-center ${path === option.href ? 'text-red-500' : ''}`}>
             <option.component size={24} color='#c1c1c1' />
           </Link>
         </Button>
