@@ -5,7 +5,7 @@ export const fieldsConfig = [
   {
     component: BaseSelect,
     props: {
-      label: 'Select category',
+      label: 'Category',
       required: true,
       options: ['asd', 'def']
     }
@@ -13,13 +13,14 @@ export const fieldsConfig = [
   {
     component: Input,
     props: {
-      label: 'Enter title',
+      label: 'Title',
+      isRequired: true,
     }
   },
   {
     component: Textarea,
     props: {
-      label: 'Enter description',
+      placeholder: 'Enter description',
     }
   }
 ]

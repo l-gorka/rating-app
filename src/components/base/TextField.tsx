@@ -9,6 +9,7 @@ export default function TextField() {
       label="Description"
       variant="bordered"
       // labelPlacement="outside"
+      
       placeholder="Enter your description"
       defaultValue="NextUI is a React UI library that provides a set of accessible, reusable, and beautiful components. NextUI is a React UI library that provides a set of accessible, reusable, and beautiful components.  NextUI is a React UI library that provides a set of accessible, reusable, and beautiful components."
       className=""

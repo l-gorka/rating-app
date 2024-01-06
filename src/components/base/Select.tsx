@@ -4,19 +4,27 @@ interface SelectProps {
   options: string[];
   label: string;
   required?: boolean;
+  labelPlacement?: string;
 }
-export const BaseSelect = ({options, label, required}: SelectProps) => {
+export const BaseSelect = ({ options, label, required, labelPlacement }: SelectProps) => {
+  console.log(labelPlacement)
   return (
-    <Select label={label} isRequired={required} variant='bordered' radius='sm' size='lg'>
+    <Select label={label} isRequired={required} variant="bordered" radius="sm" size="lg">
       {options &&
         options.map((option) => {
           return (
-            <SelectItem key={option} value={option} textValue={option} variant='bordered' classNames={{title: 'text-xl' }}>
+            <SelectItem
+              key={option}
+              value={option}
+              textValue={option}
+              variant="bordered"
+
+              classNames={{ title: 'text-xl' }}
+            >
               {option}
             </SelectItem>
-          )
-        })
-      }
+          );
+        })}
     </Select>
   );
 };

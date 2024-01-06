@@ -18,7 +18,7 @@ export default function App() {
 
   return (
     <>
-      <div className="flex flex-col w-full h-dvh max-w-screen-sm">
+      <div className="flex flex-col w-full h-dvh max-w-screen-sm mx-auto ">
         <div className="flex-grow overflow-scroll relative">
           <AnimatePresence>
             <Routes location={location} key={location.pathname}>
@@ -28,7 +28,7 @@ export default function App() {
             </Routes>
           </AnimatePresence>
         </div>
-        <div>
+        <div className='w-full max-w-screen-sm mx-auto'>
           <BottomNav options={bottomNavOptions} />
         </div>
       </div>

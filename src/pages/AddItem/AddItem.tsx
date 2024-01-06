@@ -46,9 +46,9 @@ export const AddItem = () => {
           <Form config={fieldsConfig} />
         </div>
         <Divider className='mx-auto my-4 w-11/12' />
-        <div className="flex justify-center mb-10">
+        <div className="flex justify-center">
           <Button size="lg" className="w-full h-16" variant="bordered" color='warning' radius="sm" >
-            <span className='text-lg uppercase font-semibold tracking-wide'>Add item</span>
+            <span className='text-lg font-semibold tracking-wide'>Add Item</span>
           </Button>
         </div>
       </div>
