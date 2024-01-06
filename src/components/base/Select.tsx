@@ -1,30 +1,27 @@
-import { Select, SelectItem } from '@nextui-org/react';
+import { Select, SelectItem, SelectItemProps, SelectSection } from '@nextui-org/react';
 
 interface SelectProps {
-  options: string[];
+  options: SelectItemProps[];
   label: string;
   required?: boolean;
+  canAddCategory?: boolean;
   labelPlacement?: string;
+  children?: React.ReactNode;
 }
-export const BaseSelect = ({ options, label, required, labelPlacement }: SelectProps) => {
-  console.log(labelPlacement)
+
+export const BaseSelect = ({ options, label, required }: SelectProps) => {
   return (
     <Select label={label} isRequired={required} variant="bordered" radius="sm" size="lg">
-      {options &&
-        options.map((option) => {
-          return (
-            <SelectItem
-              key={option}
-              value={option}
-              textValue={option}
-              variant="bordered"
-
-              classNames={{ title: 'text-xl' }}
-            >
-              {option}
-            </SelectItem>
-          );
-        })}
+      <SelectSection>
+        {options &&
+          options.map((option, index) => {
+            return (
+              <SelectItem {...option} key={index}>
+                {option.value}
+              </SelectItem>
+            );
+          })}
+      </SelectSection>
     </Select>
   );
 };
