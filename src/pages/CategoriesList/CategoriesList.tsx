@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-import {ItemCard} from 'src/components/ui/ItemCard';
+import { ItemList } from 'src/components/ui/ItemList';
 import RouteTransition from 'src/components/transition/RouteTransition';
 
 import { LoadingSpinner } from 'src/components/base/LoadingSpinner';
@@ -8,20 +8,26 @@ import { LoadingSpinner } from 'src/components/base/LoadingSpinner';
 import { useFetch } from 'src/hooks/useFetch';
 
 import { CategoryOverview } from 'src/types';
-
+import { Divider } from '@nextui-org/react';
+import { useSelector } from 'react-redux';
 
 export default function CategoriesList() {
+  const categoriesList = useSelector((state) => state.categoriesList);
+  const isLoading = useSelector((state) => state.statues === 'pending');
+  console.log(categoriesList);
   
- const { data: categoriesList, isLoading }: {data: CategoryOverview[], isLoading: boolean} = useFetch('/categories');
-
   return (
     <RouteTransition compKey="1">
+      <div className='p-4'>
+        <h1 className='text-xl'>Categories</h1>
+      </div>
+      <Divider />
       <LoadingSpinner isLoading={isLoading}>
-      <div className='p-3 grid grid-cols-2 gap-2'>
+      <div className='flex flex-col p-3 gap-2'>
         {categoriesList &&
           categoriesList.map((item) => (
             <Link key={item.id} to={`/category/${item.id}`}>
-              <ItemCard key={item.id} {...item} />
+              <ItemList />
             </Link>
           ))
         }

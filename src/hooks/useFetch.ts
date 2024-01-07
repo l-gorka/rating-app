@@ -12,7 +12,6 @@ export const useFetch = (url: string, method: Method = 'get') => {
     setLoading(true)
     setData(null);
     setError(null);
-    console.log('use fetch')
     instance[method](url)
     .then(res => {
       setData(res.data)
@@ -22,6 +21,7 @@ export const useFetch = (url: string, method: Method = 'get') => {
         setLoading(false)
         setError('An error occurred. Awkward..')
     })
+
 }, [url, method])
 
   return { isLoading, data, error }

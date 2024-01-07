@@ -14,7 +14,7 @@ import './index.css';
 const store = configureStore;
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <NextUIProvider>
       <BrowserRouter>
         <Provider store={store}>
@@ -24,5 +24,5 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         </Provider>
       </BrowserRouter>
     </NextUIProvider>
-  </React.StrictMode>
+  // </React.StrictMode>
 );

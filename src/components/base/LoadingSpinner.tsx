@@ -10,7 +10,7 @@ export const LoadingSpinner = ({ children, isLoading }: LoadingSpinnerProps) => 
     <>
       {isLoading ? (
         <div className="w-full h-64 grid place-items-center">
-          <Spinner size="lg" />
+          <Spinner size="lg" color='warning' />
         </div>
       ) : (
         children

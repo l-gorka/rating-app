@@ -9,11 +9,20 @@ import { handlers } from 'src/mocks/handlers';
 import BottomNav from 'src/components/ui/BottomNav';
 import { useEffect } from 'react';
 
+import { useDispatch } from 'react-redux';
+import { fetchCategories } from 'src/store/reducers';
+
 export default function App() {
   const location = useLocation();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    setupWorker(...handlers).start({onUnhandledRequest: 'bypass'});
+    async function onAppStart() {
+      await setupWorker(...handlers).start({onUnhandledRequest: 'bypass'});
+      dispatch(fetchCategories());
+    }
+
+    onAppStart();
   }, [])
 
   return (

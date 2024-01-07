@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import axiosInstance from 'src/api'
 
 const app = createSlice({
   name: 'app',
@@ -21,10 +22,9 @@ const app = createSlice({
 })
 
 export const fetchCategories = createAsyncThunk('app/fetchCategories', async () => {
-  const response = await fetch('https://catfact.ninja/fact');
-  const data = await response.json();
-  await new Promise(resolve => setTimeout(resolve, 1000));
-  return data;
+  const response = await axiosInstance.get('/categories')
+  return response.data;
 });
+
 export const { reducer } = app;
 export default app.reducer
