@@ -3,6 +3,9 @@ import { useState, ChangeEvent } from 'react';
 import axiosInstance from 'src/api';
 import axios from 'axios';
 
+import { useDispatch } from 'react-redux';
+import { fetchCategories } from 'src/store/reducers';
+
 interface AddCategoryProps {
   isOpen: boolean;
   onClose: () => void;
@@ -13,7 +16,9 @@ export const AddCategory = ({ isOpen, onClose }: AddCategoryProps) => {
     name: '',
     error: '',
   });
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false)
+
+  const dispatch = useDispatch();
 
   const onBlur = () => {
     const errorMsg = state.name.length < 3 ? 'Name must be at least 3 characters' : '';
@@ -42,6 +47,7 @@ export const AddCategory = ({ isOpen, onClose }: AddCategoryProps) => {
         name: '',
         error: '',
       });
+      dispatch(fetchCategories());
     }
       catch (err: unknown) {
         if (axios.isAxiosError(err))  {
@@ -58,12 +64,13 @@ export const AddCategory = ({ isOpen, onClose }: AddCategoryProps) => {
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} placement="bottom" className="mb-24">
+    <Modal isOpen={isOpen} onClose={onClose} placement="bottom" className="mb-16 rounded-b-none">
       <ModalContent>
         <ModalHeader>Add category</ModalHeader>
-        <ModalBody className="p-6 ">
-          <div className="h-24 grid place-items-center">
+        <ModalBody className="px-6 pb-8 h-24 ">
+          <div className="h-20 grid place-items-center">
             <Input
+              id='add-category-name'
               variant="bordered"
               label="Name"
               placeholder="Enter category name"

@@ -1,22 +1,40 @@
 import { Input, Textarea } from '@nextui-org/react';
 
+export interface FieldConfig {
+  component: React.FunctionComponent<any>
+  label?: string;
+  key: string;
+  value: string;
+  isRequired?: boolean;
+  placeholder?: string;
+  errorMessage?: string;
+  validation?: {
+    testFunction: (value: string) => string;
+  }
 
-export const fieldsConfig = [
+}
+
+export const fieldsConfig: FieldConfig[] = [
   {
     component: Input,
-    props: {
-      label: 'Title',
-      isRequired: true,
+    validation: {
+      testFunction: (value: string) => {
+        if (!value) {
+          return 'title is required';
+        }
+
+        return value.length > 2 ? '' : 'title must be more than 2 characters';
+      },
     },
+    key: 'title',
+    label: 'Title',
+    isRequired: true,
+    value: '',
   },
   {
     component: Textarea,
-    props: {
-      placeholder: 'Enter description',
-    },
+    key: 'description',
+    placeholder: 'Enter description',
+    value: '',
   },
 ];
-
-export const addCategory = () => {
-  console.log('Add category');
-}

@@ -21,7 +21,7 @@ const addCategory = (category: any) => {
 export const handlers = [
   http.get('http://127.0.0.1:3000/api/categories', async (req) => {
     await addLatency();
-    return HttpResponse.json(getCategories());
+    return HttpResponse.json(getCategories().map((c: any) => ({...c, count: c.items.length})));
   }),
 
   http.get('http://127.0.0.1:3000/api/category/:id', async ({ params }) => {

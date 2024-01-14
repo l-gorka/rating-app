@@ -4,16 +4,20 @@ import RouteTransition from '../../components/transition/RouteTransition';
 import { ItemCard } from 'src/components/ui/ItemCard';
 
 import { LoadingSpinner } from 'src/components/base/LoadingSpinner';
+import PageTitle from 'src/components/base/PageTitle';
+
+import { Divider } from '@nextui-org/react';
 
 import { useFetch } from 'src/hooks/useFetch';
 
 export default function Category() {
   const params = useParams();
-  console.log(params);
   const { data, isLoading }: { data: any; isLoading: boolean } = useFetch(`/category/${params.id}`);
-
+  
   return (
     <RouteTransition compKey="1">
+      <PageTitle>Categories</PageTitle>
+      <Divider />
       <LoadingSpinner isLoading={isLoading}>
         <div className="p-3 grid grid-cols-2 gap-2">
           {data?.items &&
