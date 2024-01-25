@@ -8,6 +8,7 @@ import CategoriesList from 'src/pages/CategoriesList/CategoriesList';
 import Category from 'src/pages/Category/Category';
 import User from 'src/pages/User/User';
 import Details from 'src/pages/Details/Details';
+import Login from'src/pages/Login/Login';
 import { AddItem } from 'src/pages/AddItem/AddItem';
 
 export const bottomNavOptions = [
@@ -60,4 +61,9 @@ export const routes = [
     exact: true,
     component: AddItem,
   },
+  {
+    path: '/login',
+    exact: true,
+    component: Login,
+  }
 ]

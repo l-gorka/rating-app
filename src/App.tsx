@@ -18,7 +18,7 @@ export default function App() {
 
   useEffect(() => {
     async function onAppStart() {
-      await setupWorker(...handlers).start({onUnhandledRequest: 'bypass'});
+      // await setupWorker(...handlers).start({onUnhandledRequest: 'bypass'});
       dispatch(fetchCategories());
     }
 

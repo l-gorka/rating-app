@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Form } from 'src/components/ui/Form';
 
+import axiosInstance from'src/api/';
+
 import { AddPhoto } from 'src/components/ui/AddPhoto';
 import { AddCategory } from 'src/components/ui/AddCategory';
 import { StarRating } from 'src/components/base/StarRating';
@@ -13,6 +15,7 @@ import { Card, CardBody, Slider, Button, Divider, Selection } from '@nextui-org/
 import RouteTransition from 'src/components/transition/RouteTransition';
 
 import { fieldsConfig } from './config';
+import CategoriesList from '../CategoriesList/CategoriesList';
 
 export const AddItem = () => {
   const [rating, setRating] = useState([3]);
@@ -76,24 +79,54 @@ export const AddItem = () => {
     setFormData(updatedFields);
   }
 
+  // =============================== PHOTO ===============================
+
+  
+  const [photo, setPhoto] = useState<File | null>(null);
+  const handlePhotoUpload = (e: File) => {
+    console.log('photo upload', e)
+    setPhoto(e);
+  }
+  
   // ============================ SUBMIT FORM ===============================
 
-
   const handleSubmit = async() => {
-    // if (!category.size) {
-    //   setCategoryError('Please select a category');
-    //   return;
-    // }
-    // validateFields();
+    const itemObject: {[key: string]: string | number} = {}
+    formData.forEach(({key, value}) => itemObject[key] = value)
 
-    const res = await fetch('https://soxcn79a59.execute-api.eu-central-1.amazonaws.com/items', {method: 'PUT', body: JSON.stringify(formData)});
-    console.log(res)
+    const categoryIndex = [...category][0]
+    itemObject.category = categoriesList[categoryIndex].id
+    itemObject.rating = rating[0]
+
+    console.log(photo)
+    if (photo) {
+      console.log('has photo')
+      itemObject.photo = await uploadPhoto()
+    }
+
+    const res = await axiosInstance.put('https://soxcn79a59.execute-api.eu-central-1.amazonaws.com/items', itemObject);
+  }
+
+  const uploadPhoto = async() => {
+    const url = 'https://api.cloudinary.com/v1_1/dgmcox/image/upload'
+    
+    const formData = new FormData();
+    formData.append('file', photo as File);
+    formData.append('upload_preset', 'xhxobeys');
+
+    const res = await fetch(url, {
+      method: 'POST',
+      body: formData,
+    });
+    const data = await res.json();
+    console.log(data.url)
+    return data.url
   }
 
   return (
     <RouteTransition compKey="details">
       <div className="relative mb-12 w-full aspect-square">
-        <AddPhoto />
+        <AddPhoto onUpload={handlePhotoUpload} />
         <Card
           isBlurred
           radius="lg"

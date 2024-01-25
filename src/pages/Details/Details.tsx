@@ -14,6 +14,10 @@ import TextField from 'src/components/base/TextField';
 export default function Details() {
   const [windowWidth, setWindowWidth] = useState<number>(1200);
 
+  const location = useLocation();
+
+  const { title, description, photo } = location.state; 
+
   return (
     <RouteTransition compKey="details">
       <div className="relative mb-20 w-full aspect-square">
@@ -22,7 +26,7 @@ export default function Details() {
           alt="NextUI hero Image"
           width={windowWidth}
           height={windowWidth}
-          src="https://picsum.photos/800/800"
+          src={photo}
         />
         <Card
           isBlurred
@@ -44,7 +48,7 @@ export default function Details() {
       </div>
       <StarRating rating={4.8} />
       <div className="p-4 mt-10">
-        <h1 className="text-5xl text-center tracking-wide mb-10">Some title</h1>
+        <h1 className="text-5xl text-center tracking-wide mb-10">{title}</h1>
         <TextField />
       </div>
     </RouteTransition>

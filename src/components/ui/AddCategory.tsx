@@ -40,7 +40,7 @@ export const AddCategory = ({ isOpen, onClose }: AddCategoryProps) => {
     setIsLoading(true);
     
     try {
-      await axiosInstance.post('/add-category', { name: state.name });
+      await axiosInstance.put('https://soxcn79a59.execute-api.eu-central-1.amazonaws.com/category', { categoryName: state.name });
       onClose();
 
       setState({

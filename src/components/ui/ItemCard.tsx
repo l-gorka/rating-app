@@ -3,14 +3,14 @@ import { Card, CardFooter, Image } from '@nextui-org/react';
 
 export const ItemCard = ({
   title,
-  image,
+  photo,
   showRating,
-  rating
+  rating,
 }: {
   showRating?: boolean,
   id: number;
   title: string;
-  image: string;
+  photo: string;
   rating?: number;
 }) => {
 
@@ -23,10 +23,10 @@ export const ItemCard = ({
         }
         <Image
           alt="Card background"
-          className="z-0 w-full h-full object-cover"
+          className="z-0 w-full aspect-square"
           height={200}
           width={200}
-          src={image}
+          src={photo}
           radius="sm"
         />
         <CardFooter className="absolute bg-black/50 bottom-0 border-t-1 z-10">

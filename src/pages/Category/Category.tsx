@@ -12,7 +12,7 @@ import { useFetch } from 'src/hooks/useFetch';
 
 export default function Category() {
   const params = useParams();
-  const { data, isLoading }: { data: any; isLoading: boolean } = useFetch(`/category/${params.id}`);
+  const { data, isLoading }: { data: any; isLoading: boolean } = useFetch(`https://soxcn79a59.execute-api.eu-central-1.amazonaws.com/get-category/${params.id}`);
   
   return (
     <RouteTransition compKey="1">

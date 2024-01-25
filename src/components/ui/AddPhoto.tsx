@@ -3,7 +3,11 @@ import { ChangeEvent, useState } from 'react';
 import { Card, Image } from '@nextui-org/react';
 import { IoCameraOutline } from 'react-icons/io5';
 
-export const AddPhoto = () => {
+interface UploadPhootProps {
+  onUpload: (e: File) => void;
+}
+
+export const AddPhoto = ({onUpload}: UploadPhootProps) => {
   const [photo, setPhoto] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
 
@@ -11,6 +15,8 @@ export const AddPhoto = () => {
     if (event.target.files && event.target.files.length > 0) {
       setPhoto(event.target.files[0]);
       setPreview(URL.createObjectURL(event.target.files[0]));
+
+      onUpload(event.target.files[0]);
     }
   };
 
