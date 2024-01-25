@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Form } from 'src/components/ui/Form';
 
 import axiosInstance from'src/api/';
@@ -15,7 +15,6 @@ import { Card, CardBody, Slider, Button, Divider, Selection } from '@nextui-org/
 import RouteTransition from 'src/components/transition/RouteTransition';
 
 import { fieldsConfig } from './config';
-import CategoriesList from '../CategoriesList/CategoriesList';
 
 export const AddItem = () => {
   const [rating, setRating] = useState([3]);
@@ -91,6 +90,17 @@ export const AddItem = () => {
   // ============================ SUBMIT FORM ===============================
 
   const handleSubmit = async() => {
+    if (!category.size) {
+      setCategoryError('Please select a category');
+      return;
+    }
+
+    validateFields();
+
+    if (formData.some((field) => field.errorMessage)) {
+      return;
+    }
+
     const itemObject: {[key: string]: string | number} = {}
     formData.forEach(({key, value}) => itemObject[key] = value)
 
@@ -98,13 +108,12 @@ export const AddItem = () => {
     itemObject.category = categoriesList[categoryIndex].id
     itemObject.rating = rating[0]
 
-    console.log(photo)
     if (photo) {
-      console.log('has photo')
       itemObject.photo = await uploadPhoto()
     }
 
     const res = await axiosInstance.put('https://soxcn79a59.execute-api.eu-central-1.amazonaws.com/items', itemObject);
+    console.log(res)
   }
 
   const uploadPhoto = async() => {
@@ -119,7 +128,7 @@ export const AddItem = () => {
       body: formData,
     });
     const data = await res.json();
-    console.log(data.url)
+
     return data.url
   }
 

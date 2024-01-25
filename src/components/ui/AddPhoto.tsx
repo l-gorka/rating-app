@@ -25,12 +25,9 @@ export const AddPhoto = ({onUpload}: UploadPhootProps) => {
 
   const [crop, setCrop] = useState({ x: 0, y: 0 })
   const [zoom, setZoom] = useState(1)
-  const [croppedImg, setCroppedImg] = useState<File | null>(null)
 
   const onCropComplete = async(_, croppedAreaPixels) => {
     const croppedImage = await cropImage(preview, croppedAreaPixels, console.log)
-
-    setCroppedImg(croppedImage)
 
     onUpload(croppedImage);
 
