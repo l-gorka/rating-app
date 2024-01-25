@@ -53,11 +53,16 @@ export const AddPhoto = ({onUpload}: UploadPhootProps) => {
         <Cropper
         image={preview as string}
         crop={crop}
-        zoom={zoom}
         aspect={1}
+        zoom={zoom}
+        cropSize={{width: window.innerWidth, height: window.innerWidth}}
         onCropChange={setCrop}
         onCropComplete={onCropComplete}
-        onZoomChange={setZoom}
+        onMediaLoaded={(mediaSize) => {
+          const isWide = mediaSize.width > mediaSize.height;
+          console.log(isWide)
+          setZoom(isWide ? window.screen.width / mediaSize.height : window.screen.width / mediaSize.width )
+        }}
       />
       )}
     </Card>
