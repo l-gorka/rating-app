@@ -12,8 +12,7 @@ export default function Categories() {
 
   return (
     <RouteTransition compKey="1">
-      {/* <a href="https://rating-app.auth.eu-central-1.amazoncognito.com/login?client_id=4fgv00rc3j02rjckqahe1797k9&response_type=token&scope=email+openid+phone&redirect_uri=http%3A%2F%2Flocalhost%3A5173%2Flogin">Login</a> */}
-      <a href="https://rating-app.auth.eu-central-1.amazoncognito.com/login?client_id=4fgv00rc3j02rjckqahe1797k9&response_type=token&scope=email+openid+phone&redirect_uri=http://192.168.0.122%3A5173%2Flogin">Login</a>
+      <a href="https://rating-app.auth.eu-central-1.amazoncognito.com/login?client_id=4fgv00rc3j02rjckqahe1797k9&response_type=token&scope=email+openid+phone&redirect_uri=http%3A%2F%2Flocalhost%3A5173%2Flogin">Login</a>
 
       <Button onClick={getData}>fetch items</Button>
       <p className="text-7xl">
