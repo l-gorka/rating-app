@@ -1,7 +1,10 @@
 import { ChangeEvent, useState } from 'react';
 
-import { Card, Image } from '@nextui-org/react';
+import { Card } from '@nextui-org/react';
 import { IoCameraOutline } from 'react-icons/io5';
+import Cropper from 'react-easy-crop'
+
+import { cropImage } from'src/utils/cropImage';
 
 interface UploadPhootProps {
   onUpload: (e: File) => void;
@@ -20,7 +23,21 @@ export const AddPhoto = ({onUpload}: UploadPhootProps) => {
     }
   };
 
+  const [crop, setCrop] = useState({ x: 0, y: 0 })
+  const [zoom, setZoom] = useState(1)
+  const [croppedImg, setCroppedImg] = useState<File | null>(null)
+
+  const onCropComplete = async(_, croppedAreaPixels) => {
+    const croppedImage = await cropImage(preview, croppedAreaPixels, console.log)
+
+    setCroppedImg(croppedImage)
+
+    onUpload(croppedImage);
+
+  }
+
   return (
+    <>
     <Card className="w-full aspect-square grid place-items-center gap-4 rounded-none">
       {!photo ? (
         <>
@@ -33,8 +50,18 @@ export const AddPhoto = ({onUpload}: UploadPhootProps) => {
           <input onChange={handleUpload} type="file" id="photo-upload" className="hidden" accept="image/*" />
         </>
       ) : (
-        <Image src={preview as string} radius='none' />
+        <Cropper
+        image={preview as string}
+        crop={crop}
+        zoom={zoom}
+        aspect={1}
+        onCropChange={setCrop}
+        onCropComplete={onCropComplete}
+        onZoomChange={setZoom}
+      />
       )}
     </Card>
+
+    </>
   );
 };
