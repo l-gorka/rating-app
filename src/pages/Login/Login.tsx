@@ -1,8 +1,26 @@
-import { useSearchParams } from 'react-router-dom';
+import { useEffect } from 'react';
+import { getTokens } from 'src/utils/auth';
+
+import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
-  const hash = new URLSearchParams(window.location.hash.slice(1)).get('id_token');
-  localStorage.setItem('id_token', hash as string);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    async function onLogin() {
+      const code = new URLSearchParams(window.location.search).get('code');
+      console.log('code', code);
+      localStorage.setItem('auth_code', code as string);
+      const accessToken = localStorage.getItem('id_token');
+
+      if (!accessToken) {
+        await getTokens(false);
+        navigate('/');
+      }
+    }
+
+    onLogin();
+  }, []);
 
   return (
     <div>

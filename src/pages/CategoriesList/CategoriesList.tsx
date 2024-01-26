@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
 
 import { ItemList } from 'src/components/ui/ItemList';
 import RouteTransition from 'src/components/transition/RouteTransition';
@@ -8,9 +9,23 @@ import PageTitle from 'src/components/base/PageTitle';
 import { Divider } from '@nextui-org/react';
 import { useSelector } from 'react-redux';
 
+import { useDispatch } from 'react-redux';
+
+import { fetchCategories } from 'src/store/reducers';
+
 export default function CategoriesList() {
   const categoriesList = useSelector((state) => state.categoriesList);
   const isLoading = useSelector((state) => state.statues === 'pending');
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    async function onAppStart() {
+      dispatch(fetchCategories());
+    }
+
+    onAppStart();
+  }, [])
   
   return (
     <RouteTransition compKey="1">

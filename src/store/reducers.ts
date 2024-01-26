@@ -22,8 +22,13 @@ const app = createSlice({
 })
 
 export const fetchCategories = createAsyncThunk('app/fetchCategories', async () => {
-  const response = await axiosInstance.get('https://soxcn79a59.execute-api.eu-central-1.amazonaws.com/categories')
-  return response.data;
+  try {
+    const response = await axiosInstance.get('https://soxcn79a59.execute-api.eu-central-1.amazonaws.com/categories')
+
+    return response.data;
+  } catch (error) {
+    return []
+  }
 });
 
 export const { reducer } = app;
