@@ -83,7 +83,6 @@ export const AddItem = () => {
   
   const [photo, setPhoto] = useState<File | null>(null);
   const handlePhotoUpload = (e: File) => {
-    console.log('photo upload', e)
     setPhoto(e);
   }
   
@@ -139,7 +138,7 @@ export const AddItem = () => {
         <Card
           isBlurred
           radius="lg"
-          className="bg-background/40 w-48 absolute top-4/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 rounded-3xl"
+          className="bg-background/40 w-48 absolute top-4/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 rounded-3xl"
         >
           <CardBody>
             <p className=" text-8xl text-center mb-2">{rating[0].toFixed(1)}</p>
