@@ -16,7 +16,7 @@ export default function Details() {
 
   const location = useLocation();
 
-  const { title, description, photo } = location.state; 
+  const { title, description, rating, photo } = location.state; 
 
   return (
     <RouteTransition compKey="details">
@@ -34,7 +34,7 @@ export default function Details() {
           className="bg-background/40  absolute top-4/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 rounded-3xl"
         >
           <CardBody>
-            <p className=" text-9xl text-center mb-2">4.8</p>
+            <p className=" text-9xl text-center mb-2">{rating.toFixed(1)}</p>
           </CardBody>
         </Card>
         <div className="absolute bottom-5 right-7 z-10 flex flex-col gap-4">
@@ -49,7 +49,7 @@ export default function Details() {
       <StarRating rating={4.8} />
       <div className="p-4 mt-10">
         <h1 className="text-5xl text-center tracking-wide mb-10">{title}</h1>
-        <TextField />
+        <TextField value={description} />
       </div>
     </RouteTransition>
   );

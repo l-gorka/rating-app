@@ -1,37 +1,57 @@
-import { Card, CardFooter, Image } from '@nextui-org/react';
+import { Card, CardBody, CardFooter, Image } from '@nextui-org/react';
+import { HiMiniStar } from 'react-icons/hi2';
+import { useRef, useLayoutEffect, useState } from 'react';
+import { MdOutlineNoPhotography } from "react-icons/md";
+
 
 
 export const ItemCard = ({
   title,
   photo,
-  showRating,
+
   rating,
 }: {
-  showRating?: boolean,
+  showRating?: boolean;
   id: number;
   title: string;
   photo: string;
   rating?: number;
 }) => {
+  const [cardDimensions, setCardDimensions] = useState<number>(100)
+  const card = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    if (card?.current) {
+      setCardDimensions(card.current.getBoundingClientRect().width)
+    }
+  }, [])
 
   return (
-      <Card isFooterBlurred radius="sm">
-        {showRating && 
-          <div className='absolute top-2 right-2 z-10 p-1 grid place-items-center bg-black/50 text-lg font-bold rounded-md'>
-            {rating}
+    <Card radius="lg"  className="relative border-1 border-zinc-600" ref={card}>
+      <CardBody className=" overflow-visible z-10 p-0">
+        {photo ?
+          <Image
+            alt="Card background"
+            className="z-0 w-full aspect-square border-b-1 border-zinc-600"
+            src={photo}
+            height={cardDimensions}
+            width={cardDimensions}
+            radius="lg"
+          />
+          : 
+          <div style={{height: cardDimensions, width: cardDimensions}} className='grid place-items-center'>
+            <MdOutlineNoPhotography size={48}/>
           </div>
         }
-        <Image
-          alt="Card background"
-          className="z-0 w-full aspect-square"
-          height={200}
-          width={200}
-          src={photo}
-          radius="sm"
-        />
-        <CardFooter className="absolute bg-black/50 bottom-0 border-t-1 z-10">
-          <p className=" text-small">{title}</p>
-        </CardFooter>
-      </Card>
+        <div className="absolute transform -bottom-4 z-20 left-1/2 -translate-x-1/2  bg-black/50 rounded-xl p-1 px-3 text-warning flex gap-1 items-center backdrop-blur-sm">
+          <HiMiniStar size={20} />
+          <span className="text-lg">{rating?.toFixed(1)}</span>
+        </div>
+      </CardBody>
+
+      <CardFooter className="flex justify-between bg-black/50 bottom-0 pt-4">
+        <p className="text-small">{title}</p>
+      </CardFooter>
+    </Card>
   );
 };
