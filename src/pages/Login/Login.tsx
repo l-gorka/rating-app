@@ -9,7 +9,6 @@ export default function Login() {
   useEffect(() => {
     async function onLogin() {
       const code = new URLSearchParams(window.location.search).get('code');
-      console.log('code', code);
       localStorage.setItem('auth_code', code as string);
       const accessToken = localStorage.getItem('id_token');
 
