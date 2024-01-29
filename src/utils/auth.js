@@ -1,8 +1,8 @@
 const config = {
   tokenEndpoint: 'https://rating-app.auth.eu-central-1.amazoncognito.com/oauth2/token',
-  clientId: 'cn7l1jgeea6q2lofc5or6pm99',
-  clientIdSecret: '1jpla8tn0feeoo6vhbtmhdndr7cig1h15tbihcpogt9p33kmkve9',
-  redirectUri: 'http://localhost:5173/login',
+  clientId: import.meta.env.VITE_CLIENT_ID,
+  clientIdSecret: import.meta.env.VITE_CLIENT_SECRET,
+  redirectUri: 'https%3A%2F%2Frelease-0-1--monumental-salmiakki-c69c51.netlify.app%2Flogin',
 };
 
 export async function getTokens(refresh) {
