@@ -14,7 +14,7 @@ export default function BottomNav({ options }: { options: BottomNavItem[] }) {
   const path = window.location.pathname;
 
   return (
-    <ButtonGroup className="flex z-10 w-full h-16 bg-black/50 rounded-none backdrop-blur-sm border-t-1 border-t-gray-600">
+    <ButtonGroup className="flex z-10 w-full h-16 px-12 bg-black/50 rounded-none backdrop-blur-sm border-t-1 border-t-gray-600">
       {options.map((option) => (
         <Button className="flex-grow h-full" 
         key={option.href} 

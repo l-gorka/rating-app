@@ -24,10 +24,6 @@ export const bottomNavOptions = [
     component: TbCategoryPlus,
     href: '/categories',
   },
-  {
-    component: FaRegUserCircle,
-    href: '/user',
-  },
 ]
 
 export const routes = [

@@ -15,7 +15,7 @@ import { fetchCategories } from 'src/store/reducers';
 
 export default function CategoriesList() {
   const categoriesList = useSelector((state) => state.categoriesList);
-  const isLoading = useSelector((state) => state.statues === 'pending');
+  const isLoading = useSelector((state) => state.status === 'pending');
 
   const dispatch = useDispatch();
 
