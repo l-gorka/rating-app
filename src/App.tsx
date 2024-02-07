@@ -12,7 +12,14 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchCategories } from 'src/store/reducers';
 
-export default function App() {
+import { Amplify } from 'aws-amplify';
+import type { WithAuthenticatorProps } from '@aws-amplify/ui-react';
+import { withAuthenticator } from '@aws-amplify/ui-react';
+import '@aws-amplify/ui-react/styles.css';
+import config from './amplifyconfiguration.json';
+Amplify.configure(config);
+
+export function App() {
   const location = useLocation();
   const dispatch = useDispatch();
 
@@ -44,3 +51,5 @@ export default function App() {
     </>
   );
 }
+
+export default withAuthenticator(App);

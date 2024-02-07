@@ -6,6 +6,11 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { fetchCategories } from 'src/store/reducers';
 
+import { generateClient } from 'aws-amplify/api';
+import { createCategory } from 'src/graphql/mutations';
+
+const client = generateClient();
+
 interface AddCategoryProps {
   isOpen: boolean;
   onClose: () => void;
@@ -40,24 +45,14 @@ export const AddCategory = ({ isOpen, onClose }: AddCategoryProps) => {
     setIsLoading(true);
     
     try {
-      await axiosInstance.put('https://soxcn79a59.execute-api.eu-central-1.amazonaws.com/category', { categoryName: state.name });
-      onClose();
-
-      setState({
-        name: '',
-        error: '',
-      });
-      dispatch(fetchCategories());
-    }
-      catch (err: unknown) {
-        if (axios.isAxiosError(err))  {
-          setState({
-            ...state,
-             error: err.response?.data.error,
-          })
-        } else {
-          console.error(err)
+      await client.graphql({
+        query: createCategory,
+        variables: {
+          input: {
+            name: state.name,
+          }
         }
+      });
     } finally {
       setIsLoading(false);
     }

@@ -10,6 +10,11 @@ import { BaseSelect } from 'src/components/base/Select';
 import { FaPlus } from 'react-icons/fa6';
 import { useSelector } from 'react-redux';
 
+import { generateClient } from 'aws-amplify/api';
+import { listCategories } from 'src/graphql/queries';
+
+const client = generateClient();
+
 import { Card, CardBody, Slider, Button, Divider, Selection } from '@nextui-org/react';
 
 import RouteTransition from 'src/components/transition/RouteTransition';
@@ -20,16 +25,24 @@ export const AddItem = () => {
   const [rating, setRating] = useState([3]);
   const [modalOpen, setModalOpen] = useState(false);
   const [category, setCategory] = useState<Selection>(new Set());
+  const [categoriesList, setCategoriesList] = useState<Array<any>>([]);
 
   const [categoryError, setCategoryError] = useState('');
 
   useEffect(() => {
     setIsFormDisabled(!category.size);
+    async function fetchCategories() {
+      const catList = await client.graphql({query: listCategories});
+      setCategoriesList(catList.data.listCategories.items);
+    }
+
+    fetchCategories();
+
   }, [category]);
 
   const [isFormDisabled, setIsFormDisabled] = useState(true);
 
-  const categoriesList = useSelector((state) => state.categoriesList);
+  // const categoriesList = useSelector((state) => state.categoriesList);
 
   const handleChangeCategory = (values: Selection) => {
     setCategoryError('');

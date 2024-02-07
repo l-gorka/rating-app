@@ -1,8 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom/client';
 
-import { Amplify, Auth, Hub } from 'aws-amplify';
-
 import { NextUIProvider } from '@nextui-org/react';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
