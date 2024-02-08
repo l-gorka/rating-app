@@ -5,18 +5,19 @@ import { AnimatePresence } from 'framer-motion';
 import BottomNav from 'src/components/ui/BottomNav';
 import { useEffect } from 'react';
 
-import { useDispatch } from 'react-redux';
+
 import { fetchCategories } from 'src/store/reducers';
 
 import { Amplify } from 'aws-amplify';
 import { withAuthenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 import config from './amplifyconfiguration.json';
+import { useAppDispatch } from './store/configureStore';
 Amplify.configure(config);
 
 export function App() {
   const location = useLocation();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     async function onAppStart() {

@@ -8,13 +8,10 @@ import { MdOutlineNoPhotography } from "react-icons/md";
 export const ItemCard = ({
   title,
   image,
-
   rating,
 }: {
-  showRating?: boolean;
-  id: number;
   title: string;
-  image: string;
+  image?: string;
   rating?: number;
 }) => {
   const [cardDimensions, setCardDimensions] = useState<number>(100)

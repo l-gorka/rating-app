@@ -1,6 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit'
 import app from './reducers';
 
-export default configureStore({
+import { useDispatch } from 'react-redux';
+
+const store = configureStore({
   reducer: app
 })
+
+export default store
+
+export type AppDispatch = typeof store.dispatch
+
+export const useAppDispatch = () => useDispatch<AppDispatch>()

@@ -1,4 +1,4 @@
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ItemCard } from 'src/components/ui/ItemCard';
 
 import { LoadingSpinner } from 'src/components/base/LoadingSpinner';
@@ -17,7 +17,7 @@ export default function Category({items, isLoading}: CardsViewProps) {
           {items &&
             items.map((item) => (
               <Link key={item.id} to={`/details/${item.id}`} state={item}>
-                <ItemCard key={item.id} {...item} showRating={true} />
+                <ItemCard key={item.id} {...item}  />
               </Link>
             ))}
         </div>

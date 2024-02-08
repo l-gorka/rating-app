@@ -1,9 +1,7 @@
 import { Divider, Button, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from '@nextui-org/react';
 import { useState, ChangeEvent } from 'react';
-import axiosInstance from 'src/api';
-import axios from 'axios';
 
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from 'src/store/configureStore';
 import { fetchCategories } from 'src/store/reducers';
 
 import { generateClient } from 'aws-amplify/api';
@@ -23,7 +21,7 @@ export const AddCategory = ({ isOpen, onClose }: AddCategoryProps) => {
   });
   const [isLoading, setIsLoading] = useState(false)
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const onBlur = () => {
     const errorMsg = state.name.length < 3 ? 'Name must be at least 3 characters' : '';
@@ -55,6 +53,8 @@ export const AddCategory = ({ isOpen, onClose }: AddCategoryProps) => {
       });
     } finally {
       setIsLoading(false);
+      await dispatch(fetchCategories());
+      onClose();
     }
   };
 

@@ -6,10 +6,11 @@ import CardsView from 'src/components/ui/CardsView';
 import client from 'src/api'
 import { listItems } from 'src/graphql/queries';
 import { useEffect, useState } from 'react';
+import { Item } from 'api';
 
 export default function Category() {
   const params = useParams();
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<Item[]>([]);
 
   useEffect(() => {
     async function getData() {
@@ -21,7 +22,7 @@ export default function Category() {
           }
         }
       });
-      console.log(res)
+
       setData(res.data.listItems.items);
     }
 
