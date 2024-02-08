@@ -2,35 +2,38 @@ import { useParams } from 'react-router-dom';
 
 import RouteTransition from '../../components/transition/RouteTransition';
 import CardsView from 'src/components/ui/CardsView';
-
-import client from 'src/api'
-import { listItems } from 'src/graphql/queries';
 import { useEffect, useState } from 'react';
+
+import { useSelector } from 'react-redux';
+import { IRootState } from 'src/store/reducers';
 import { Item } from 'api';
+
+import NavBar from 'src/components/ui/NavBar'
 
 export default function Category() {
   const params = useParams();
-  const [data, setData] = useState<Item[]>([]);
+  const [items, setItems] = useState<Item[]>([]);
+  const itemList = useSelector((state: IRootState) => state.itemsList);
+  const isLoading = useSelector((state: IRootState) => state.itemsStatus === 'pending');
+  
+  useEffect(() => {
+    const filteredItems = itemList.filter((item) => item.categoryItemsId === params.id);
+    
+    setItems(filteredItems as Item[]);
+  }, [itemList, isLoading, params.id])
+  
+  const categories = useSelector((state: IRootState) => state.categoriesList);
+  const [categoryName, setCategoryName] = useState<string>();
 
   useEffect(() => {
-    async function getData() {
-      const res = await client.graphql({
-        query: listItems,
-        variables: {
-          filter: {
-            categoryItemsId: {eq: params.id}
-          }
-        }
-      });
-
-      setData(res.data.listItems.items);
-    }
-
-    getData();
+    const categoryName = categories.find((category) => category.id === params.id)?.name;
+    setCategoryName(categoryName);
   }, [])
+
   return (
     <RouteTransition compKey="1">
-      <CardsView isLoading={false} items={data} />
+      <NavBar title={categoryName} />
+      <CardsView isLoading={isLoading} items={items} />
     </RouteTransition>
   );
 }

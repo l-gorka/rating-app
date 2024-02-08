@@ -48,7 +48,7 @@ export default function Details() {
       </div>
       <StarRating rating={4.8} />
       <div className="p-4 mt-10">
-        <h1 className="text-5xl text-center tracking-wide mb-10">{title}</h1>
+        <h1 className="text-5xl text-center tracking-wide mb-10 text-wrap truncate">{title}</h1>
         <TextField value={description} />
       </div>
     </RouteTransition>

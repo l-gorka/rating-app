@@ -6,7 +6,7 @@ import BottomNav from 'src/components/ui/BottomNav';
 import { useEffect } from 'react';
 
 
-import { fetchCategories } from 'src/store/reducers';
+import { fetchCategories, fetchAllItems } from 'src/store/reducers';
 
 import { Amplify } from 'aws-amplify';
 import { withAuthenticator } from '@aws-amplify/ui-react';
@@ -22,6 +22,7 @@ export function App() {
   useEffect(() => {
     async function onAppStart() {
       dispatch(fetchCategories());
+      dispatch(fetchAllItems());
     }
 
     onAppStart();

@@ -47,7 +47,7 @@ export const ItemCard = ({
       </CardBody>
 
       <CardFooter className="flex justify-between bg-black/50 bottom-0 pt-4">
-        <p className="text-small">{title}</p>
+        <p className="text-small overflow-hidden text-nowrap overflow-ellipsis">{title}</p>
       </CardFooter>
     </Card>
   );
