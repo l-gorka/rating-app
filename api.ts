@@ -58,7 +58,7 @@ export type Category = {
   __typename: "Category",
   id: string,
   name: string,
-  posts?: ModelItemConnection | null,
+  items?: ModelItemConnection | null,
   createdAt: string,
   updatedAt: string,
   owner?: string | null,
@@ -73,11 +73,14 @@ export type ModelItemConnection = {
 export type Item = {
   __typename: "Item",
   id: string,
+  category: Category,
   title: string,
-  category?: Category | null,
+  rating: string,
+  description?: string | null,
+  image?: string | null,
   createdAt: string,
   updatedAt: string,
-  categoryPostsId?: string | null,
+  categoryItemsId?: string | null,
   owner?: string | null,
 };
 
@@ -93,15 +96,21 @@ export type DeleteCategoryInput = {
 export type CreateItemInput = {
   id?: string | null,
   title: string,
-  categoryPostsId?: string | null,
+  rating: string,
+  description?: string | null,
+  image?: string | null,
+  categoryItemsId?: string | null,
 };
 
 export type ModelItemConditionInput = {
   title?: ModelStringInput | null,
+  rating?: ModelStringInput | null,
+  description?: ModelStringInput | null,
+  image?: ModelStringInput | null,
   and?: Array< ModelItemConditionInput | null > | null,
   or?: Array< ModelItemConditionInput | null > | null,
   not?: ModelItemConditionInput | null,
-  categoryPostsId?: ModelIDInput | null,
+  categoryItemsId?: ModelIDInput | null,
 };
 
 export type ModelIDInput = {
@@ -123,7 +132,10 @@ export type ModelIDInput = {
 export type UpdateItemInput = {
   id: string,
   title?: string | null,
-  categoryPostsId?: string | null,
+  rating?: string | null,
+  description?: string | null,
+  image?: string | null,
+  categoryItemsId?: string | null,
 };
 
 export type DeleteItemInput = {
@@ -147,10 +159,13 @@ export type ModelCategoryConnection = {
 export type ModelItemFilterInput = {
   id?: ModelIDInput | null,
   title?: ModelStringInput | null,
+  rating?: ModelStringInput | null,
+  description?: ModelStringInput | null,
+  image?: ModelStringInput | null,
   and?: Array< ModelItemFilterInput | null > | null,
   or?: Array< ModelItemFilterInput | null > | null,
   not?: ModelItemFilterInput | null,
-  categoryPostsId?: ModelIDInput | null,
+  categoryItemsId?: ModelIDInput | null,
 };
 
 export type ModelSubscriptionCategoryFilterInput = {
@@ -193,6 +208,9 @@ export type ModelSubscriptionStringInput = {
 export type ModelSubscriptionItemFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   title?: ModelSubscriptionStringInput | null,
+  rating?: ModelSubscriptionStringInput | null,
+  description?: ModelSubscriptionStringInput | null,
+  image?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionItemFilterInput | null > | null,
   or?: Array< ModelSubscriptionItemFilterInput | null > | null,
 };
@@ -207,7 +225,7 @@ export type CreateCategoryMutation = {
     __typename: "Category",
     id: string,
     name: string,
-    posts?:  {
+    items?:  {
       __typename: "ModelItemConnection",
       nextToken?: string | null,
     } | null,
@@ -227,7 +245,7 @@ export type UpdateCategoryMutation = {
     __typename: "Category",
     id: string,
     name: string,
-    posts?:  {
+    items?:  {
       __typename: "ModelItemConnection",
       nextToken?: string | null,
     } | null,
@@ -247,7 +265,7 @@ export type DeleteCategoryMutation = {
     __typename: "Category",
     id: string,
     name: string,
-    posts?:  {
+    items?:  {
       __typename: "ModelItemConnection",
       nextToken?: string | null,
     } | null,
@@ -266,18 +284,21 @@ export type CreateItemMutation = {
   createItem?:  {
     __typename: "Item",
     id: string,
-    title: string,
-    category?:  {
+    category:  {
       __typename: "Category",
       id: string,
       name: string,
       createdAt: string,
       updatedAt: string,
       owner?: string | null,
-    } | null,
+    },
+    title: string,
+    rating: string,
+    description?: string | null,
+    image?: string | null,
     createdAt: string,
     updatedAt: string,
-    categoryPostsId?: string | null,
+    categoryItemsId?: string | null,
     owner?: string | null,
   } | null,
 };
@@ -291,18 +312,21 @@ export type UpdateItemMutation = {
   updateItem?:  {
     __typename: "Item",
     id: string,
-    title: string,
-    category?:  {
+    category:  {
       __typename: "Category",
       id: string,
       name: string,
       createdAt: string,
       updatedAt: string,
       owner?: string | null,
-    } | null,
+    },
+    title: string,
+    rating: string,
+    description?: string | null,
+    image?: string | null,
     createdAt: string,
     updatedAt: string,
-    categoryPostsId?: string | null,
+    categoryItemsId?: string | null,
     owner?: string | null,
   } | null,
 };
@@ -316,18 +340,21 @@ export type DeleteItemMutation = {
   deleteItem?:  {
     __typename: "Item",
     id: string,
-    title: string,
-    category?:  {
+    category:  {
       __typename: "Category",
       id: string,
       name: string,
       createdAt: string,
       updatedAt: string,
       owner?: string | null,
-    } | null,
+    },
+    title: string,
+    rating: string,
+    description?: string | null,
+    image?: string | null,
     createdAt: string,
     updatedAt: string,
-    categoryPostsId?: string | null,
+    categoryItemsId?: string | null,
     owner?: string | null,
   } | null,
 };
@@ -341,7 +368,7 @@ export type GetCategoryQuery = {
     __typename: "Category",
     id: string,
     name: string,
-    posts?:  {
+    items?:  {
       __typename: "ModelItemConnection",
       nextToken?: string | null,
     } | null,
@@ -380,18 +407,21 @@ export type GetItemQuery = {
   getItem?:  {
     __typename: "Item",
     id: string,
-    title: string,
-    category?:  {
+    category:  {
       __typename: "Category",
       id: string,
       name: string,
       createdAt: string,
       updatedAt: string,
       owner?: string | null,
-    } | null,
+    },
+    title: string,
+    rating: string,
+    description?: string | null,
+    image?: string | null,
     createdAt: string,
     updatedAt: string,
-    categoryPostsId?: string | null,
+    categoryItemsId?: string | null,
     owner?: string | null,
   } | null,
 };
@@ -409,9 +439,12 @@ export type ListItemsQuery = {
       __typename: "Item",
       id: string,
       title: string,
+      rating: string,
+      description?: string | null,
+      image?: string | null,
       createdAt: string,
       updatedAt: string,
-      categoryPostsId?: string | null,
+      categoryItemsId?: string | null,
       owner?: string | null,
     } | null >,
     nextToken?: string | null,
@@ -428,7 +461,7 @@ export type OnCreateCategorySubscription = {
     __typename: "Category",
     id: string,
     name: string,
-    posts?:  {
+    items?:  {
       __typename: "ModelItemConnection",
       nextToken?: string | null,
     } | null,
@@ -448,7 +481,7 @@ export type OnUpdateCategorySubscription = {
     __typename: "Category",
     id: string,
     name: string,
-    posts?:  {
+    items?:  {
       __typename: "ModelItemConnection",
       nextToken?: string | null,
     } | null,
@@ -468,7 +501,7 @@ export type OnDeleteCategorySubscription = {
     __typename: "Category",
     id: string,
     name: string,
-    posts?:  {
+    items?:  {
       __typename: "ModelItemConnection",
       nextToken?: string | null,
     } | null,
@@ -487,18 +520,21 @@ export type OnCreateItemSubscription = {
   onCreateItem?:  {
     __typename: "Item",
     id: string,
-    title: string,
-    category?:  {
+    category:  {
       __typename: "Category",
       id: string,
       name: string,
       createdAt: string,
       updatedAt: string,
       owner?: string | null,
-    } | null,
+    },
+    title: string,
+    rating: string,
+    description?: string | null,
+    image?: string | null,
     createdAt: string,
     updatedAt: string,
-    categoryPostsId?: string | null,
+    categoryItemsId?: string | null,
     owner?: string | null,
   } | null,
 };
@@ -512,18 +548,21 @@ export type OnUpdateItemSubscription = {
   onUpdateItem?:  {
     __typename: "Item",
     id: string,
-    title: string,
-    category?:  {
+    category:  {
       __typename: "Category",
       id: string,
       name: string,
       createdAt: string,
       updatedAt: string,
       owner?: string | null,
-    } | null,
+    },
+    title: string,
+    rating: string,
+    description?: string | null,
+    image?: string | null,
     createdAt: string,
     updatedAt: string,
-    categoryPostsId?: string | null,
+    categoryItemsId?: string | null,
     owner?: string | null,
   } | null,
 };
@@ -537,18 +576,21 @@ export type OnDeleteItemSubscription = {
   onDeleteItem?:  {
     __typename: "Item",
     id: string,
-    title: string,
-    category?:  {
+    category:  {
       __typename: "Category",
       id: string,
       name: string,
       createdAt: string,
       updatedAt: string,
       owner?: string | null,
-    } | null,
+    },
+    title: string,
+    rating: string,
+    description?: string | null,
+    image?: string | null,
     createdAt: string,
     updatedAt: string,
-    categoryPostsId?: string | null,
+    categoryItemsId?: string | null,
     owner?: string | null,
   } | null,
 };

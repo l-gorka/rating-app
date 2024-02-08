@@ -15,7 +15,7 @@ export const createCategory = /* GraphQL */ `mutation CreateCategory(
   createCategory(input: $input, condition: $condition) {
     id
     name
-    posts {
+    items {
       nextToken
       __typename
     }
@@ -36,7 +36,7 @@ export const updateCategory = /* GraphQL */ `mutation UpdateCategory(
   updateCategory(input: $input, condition: $condition) {
     id
     name
-    posts {
+    items {
       nextToken
       __typename
     }
@@ -57,7 +57,7 @@ export const deleteCategory = /* GraphQL */ `mutation DeleteCategory(
   deleteCategory(input: $input, condition: $condition) {
     id
     name
-    posts {
+    items {
       nextToken
       __typename
     }
@@ -77,7 +77,6 @@ export const createItem = /* GraphQL */ `mutation CreateItem(
 ) {
   createItem(input: $input, condition: $condition) {
     id
-    title
     category {
       id
       name
@@ -86,9 +85,13 @@ export const createItem = /* GraphQL */ `mutation CreateItem(
       owner
       __typename
     }
+    title
+    rating
+    description
+    image
     createdAt
     updatedAt
-    categoryPostsId
+    categoryItemsId
     owner
     __typename
   }
@@ -103,7 +106,6 @@ export const updateItem = /* GraphQL */ `mutation UpdateItem(
 ) {
   updateItem(input: $input, condition: $condition) {
     id
-    title
     category {
       id
       name
@@ -112,9 +114,13 @@ export const updateItem = /* GraphQL */ `mutation UpdateItem(
       owner
       __typename
     }
+    title
+    rating
+    description
+    image
     createdAt
     updatedAt
-    categoryPostsId
+    categoryItemsId
     owner
     __typename
   }
@@ -129,7 +135,6 @@ export const deleteItem = /* GraphQL */ `mutation DeleteItem(
 ) {
   deleteItem(input: $input, condition: $condition) {
     id
-    title
     category {
       id
       name
@@ -138,9 +143,13 @@ export const deleteItem = /* GraphQL */ `mutation DeleteItem(
       owner
       __typename
     }
+    title
+    rating
+    description
+    image
     createdAt
     updatedAt
-    categoryPostsId
+    categoryItemsId
     owner
     __typename
   }

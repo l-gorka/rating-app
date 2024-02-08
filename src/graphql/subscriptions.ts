@@ -15,7 +15,7 @@ export const onCreateCategory = /* GraphQL */ `subscription OnCreateCategory(
   onCreateCategory(filter: $filter, owner: $owner) {
     id
     name
-    posts {
+    items {
       nextToken
       __typename
     }
@@ -36,7 +36,7 @@ export const onUpdateCategory = /* GraphQL */ `subscription OnUpdateCategory(
   onUpdateCategory(filter: $filter, owner: $owner) {
     id
     name
-    posts {
+    items {
       nextToken
       __typename
     }
@@ -57,7 +57,7 @@ export const onDeleteCategory = /* GraphQL */ `subscription OnDeleteCategory(
   onDeleteCategory(filter: $filter, owner: $owner) {
     id
     name
-    posts {
+    items {
       nextToken
       __typename
     }
@@ -77,7 +77,6 @@ export const onCreateItem = /* GraphQL */ `subscription OnCreateItem(
 ) {
   onCreateItem(filter: $filter, owner: $owner) {
     id
-    title
     category {
       id
       name
@@ -86,9 +85,13 @@ export const onCreateItem = /* GraphQL */ `subscription OnCreateItem(
       owner
       __typename
     }
+    title
+    rating
+    description
+    image
     createdAt
     updatedAt
-    categoryPostsId
+    categoryItemsId
     owner
     __typename
   }
@@ -103,7 +106,6 @@ export const onUpdateItem = /* GraphQL */ `subscription OnUpdateItem(
 ) {
   onUpdateItem(filter: $filter, owner: $owner) {
     id
-    title
     category {
       id
       name
@@ -112,9 +114,13 @@ export const onUpdateItem = /* GraphQL */ `subscription OnUpdateItem(
       owner
       __typename
     }
+    title
+    rating
+    description
+    image
     createdAt
     updatedAt
-    categoryPostsId
+    categoryItemsId
     owner
     __typename
   }
@@ -129,7 +135,6 @@ export const onDeleteItem = /* GraphQL */ `subscription OnDeleteItem(
 ) {
   onDeleteItem(filter: $filter, owner: $owner) {
     id
-    title
     category {
       id
       name
@@ -138,9 +143,13 @@ export const onDeleteItem = /* GraphQL */ `subscription OnDeleteItem(
       owner
       __typename
     }
+    title
+    rating
+    description
+    image
     createdAt
     updatedAt
-    categoryPostsId
+    categoryItemsId
     owner
     __typename
   }

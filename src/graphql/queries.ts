@@ -12,7 +12,7 @@ export const getCategory = /* GraphQL */ `query GetCategory($id: ID!) {
   getCategory(id: $id) {
     id
     name
-    posts {
+    items {
       nextToken
       __typename
     }
@@ -51,7 +51,6 @@ export const listCategories = /* GraphQL */ `query ListCategories(
 export const getItem = /* GraphQL */ `query GetItem($id: ID!) {
   getItem(id: $id) {
     id
-    title
     category {
       id
       name
@@ -60,9 +59,13 @@ export const getItem = /* GraphQL */ `query GetItem($id: ID!) {
       owner
       __typename
     }
+    title
+    rating
+    description
+    image
     createdAt
     updatedAt
-    categoryPostsId
+    categoryItemsId
     owner
     __typename
   }
@@ -77,9 +80,12 @@ export const listItems = /* GraphQL */ `query ListItems(
     items {
       id
       title
+      rating
+      description
+      image
       createdAt
       updatedAt
-      categoryPostsId
+      categoryItemsId
       owner
       __typename
     }

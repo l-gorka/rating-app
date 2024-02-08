@@ -7,13 +7,16 @@ type Category @model
 {
   id: ID!
   name: String!
-  posts: [Item] @hasMany
+  items: [Item] @hasMany
 }
 
 type Item @model
 @auth(rules: [{ allow: owner }])
  {
   id: ID!
+  category: Category! @belongsTo
   title: String!
-  category: Category @belongsTo
+  rating: String!
+  description: String
+  image: String
 }

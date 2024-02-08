@@ -1,7 +1,7 @@
 import { Input, Textarea } from '@nextui-org/react';
 
 export interface FieldConfig {
-  component: React.FunctionComponent<any>
+  component: React.FunctionComponent
   label?: string;
   key: string;
   value: string;

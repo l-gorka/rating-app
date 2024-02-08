@@ -8,12 +8,14 @@ import { AddCategory } from 'src/components/ui/AddCategory';
 import { StarRating } from 'src/components/base/StarRating';
 import { BaseSelect } from 'src/components/base/Select';
 import { FaPlus } from 'react-icons/fa6';
+import { listCategories } from 'src/graphql/queries';
+import { createItem } from 'src/graphql/mutations';
+
 import { useSelector } from 'react-redux';
 
-import { generateClient } from 'aws-amplify/api';
-import { listCategories } from 'src/graphql/queries';
+import client from 'src/api'
 
-const client = generateClient();
+import {CreateItemInput } from 'api.ts'
 
 import { Card, CardBody, Slider, Button, Divider, Selection } from '@nextui-org/react';
 
@@ -25,18 +27,12 @@ export const AddItem = () => {
   const [rating, setRating] = useState([3]);
   const [modalOpen, setModalOpen] = useState(false);
   const [category, setCategory] = useState<Selection>(new Set());
-  const [categoriesList, setCategoriesList] = useState<Array<any>>([]);
+  const categoriesList = useSelector((state) => state.categoriesList);
 
   const [categoryError, setCategoryError] = useState('');
 
   useEffect(() => {
     setIsFormDisabled(!category.size);
-    async function fetchCategories() {
-      const catList = await client.graphql({query: listCategories});
-      setCategoriesList(catList.data.listCategories.items);
-    }
-
-    fetchCategories();
 
   }, [category]);
 
@@ -51,7 +47,7 @@ export const AddItem = () => {
 
   // ============================ FORM ===============================
 
-  const [formData, setFormData] = useState([...fieldsConfig]);
+  const [formData, setFormData] = useState<any>([...fieldsConfig]);
 
   const onChange = (key: string, value: string) => {
     updateField(key, value, false);
@@ -113,18 +109,23 @@ export const AddItem = () => {
       return;
     }
 
-    const itemObject: {[key: string]: string | number} = {}
-    formData.forEach(({key, value}) => itemObject[key] = value)
+    const itemObject: Partial<CreateItemInput> = {}
+    formData.forEach(({key, value}: {key: keyof CreateItemInput, value: string}) => itemObject[key] = value)
 
     const categoryIndex = [...category][0]
-    itemObject.category = categoriesList[categoryIndex].id
-    itemObject.rating = rating[0]
+    itemObject.categoryItemsId = categoriesList[categoryIndex].id
+    itemObject.rating = String(rating[0])
 
     if (photo) {
-      itemObject.photo = await uploadPhoto()
+      itemObject.image = await uploadPhoto()
     }
-
-    const res = await axiosInstance.put('https://soxcn79a59.execute-api.eu-central-1.amazonaws.com/items', itemObject);
+    console.log(itemObject)
+    const res = await client.graphql({
+      query: createItem,
+      variables: {
+        input: itemObject
+      }
+    });
     console.log(res)
   }
 

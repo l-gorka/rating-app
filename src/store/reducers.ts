@@ -1,11 +1,18 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import axiosInstance from 'src/api'
+
+import client from 'src/api'
+
+import { listCategories, listItems } from 'src/graphql/queries'
+
+import { Category, Item} from 'api'
 
 const app = createSlice({
   name: 'app',
   initialState: {
-    status: 'idle',
-    categoriesList: [],
+    categoriesStatus: 'idle',
+    categoriesList: [] as Category[],
+    itemsStatus: 'idle',
+    itemsList: [] as Partial<Item>[],
   },
   reducers: {
   },
@@ -13,23 +20,42 @@ const app = createSlice({
     builder
     .addCase(fetchCategories.fulfilled, (state, action) => {
         state.categoriesList = action.payload
-        state.status = 'fullfilled'
+        state.categoriesStatus = 'fullfilled'
       })
-    .addCase(fetchCategories.pending, (state, action) => {
-       state.status = 'pending'
+    .addCase(fetchCategories.pending, (state) => {
+       state.categoriesStatus = 'pending'
+    })
+    .addCase(fetchAllItems.pending, (state) => {
+       state.itemsStatus = 'pending'
+    })
+    .addCase(fetchAllItems.fulfilled, (state, action) => {
+       state.itemsList = action.payload
+       state.itemsStatus = 'fullfilled'
     })
   }
 })
 
 export const fetchCategories = createAsyncThunk('app/fetchCategories', async () => {
   try {
-    const response = await axiosInstance.get('https://soxcn79a59.execute-api.eu-central-1.amazonaws.com/categories')
+    const {data} =  await client.graphql({query: listCategories});
 
-    return response.data;
+    return data.listCategories.items;
   } catch (error) {
     return []
   }
 });
 
+export const fetchAllItems = createAsyncThunk('app/fetchAllItems', async () => {
+  try {
+    const {data} =  await client.graphql({query: listItems});
+
+    return data.listItems.items;
+  } catch (error) {
+    return []
+  }
+})
+
 export const { reducer } = app;
 export default app.reducer
+
+export type IRootState = ReturnType<typeof app.reducer>

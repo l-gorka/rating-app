@@ -1,28 +1,26 @@
-import { useState, useEffect } from'react'
-import instance from 'src/api'
+import { useState, useEffect } from 'react';
+import client from 'src/api';
 
-type Method = 'get' | 'post' | 'put' | 'delete'
-
-export const useFetch = (url: string, method: Method = 'get') => {
-  const [isLoading, setLoading] = useState(true)
-  const [data, setData] = useState<any>(null)
-  const [error, setError] = useState(null)
+export const useFetch = (query) => {
+  const [isLoading, setLoading] = useState(true);
+  const [data, setData] = useState<any>(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    setLoading(true)
-    setData(null);
-    setError(null);
-    instance[method](url)
-    .then(res => {
-      setData(res.data)
+    async function getData() {
+      setLoading(true);
+      setData(null);
+      setError(null);
+      const res = await client.graphql({
+        query
+      });
+      setData(res.data);
       setLoading(false);
-    })
-    .catch(err => {
-        setLoading(false)
-        setError('An error occurred. Awkward..')
-    })
+      setError(null);
+    }
 
-}, [url, method])
+    getData();
+  }, [query]);
 
-  return { isLoading, data, error }
-}
+  return { isLoading, data, error };
+};

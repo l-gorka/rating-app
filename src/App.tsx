@@ -2,10 +2,6 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import { routes, bottomNavOptions } from './config';
 
 import { AnimatePresence } from 'framer-motion';
-
-import { setupWorker } from 'msw/browser'
-import { handlers } from 'src/mocks/handlers';
-
 import BottomNav from 'src/components/ui/BottomNav';
 import { useEffect } from 'react';
 
@@ -13,7 +9,6 @@ import { useDispatch } from 'react-redux';
 import { fetchCategories } from 'src/store/reducers';
 
 import { Amplify } from 'aws-amplify';
-import type { WithAuthenticatorProps } from '@aws-amplify/ui-react';
 import { withAuthenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 import config from './amplifyconfiguration.json';
@@ -25,8 +20,7 @@ export function App() {
 
   useEffect(() => {
     async function onAppStart() {
-      // await setupWorker(...handlers).start({onUnhandledRequest: 'bypass'});
-      // dispatch(fetchCategories());
+      dispatch(fetchCategories());
     }
 
     onAppStart();
