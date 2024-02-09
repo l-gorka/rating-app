@@ -6,7 +6,7 @@ import { LoadingSpinner } from 'src/components/base/LoadingSpinner';
 import { Item } from 'api';
 
 export interface CardsViewProps {
-  items: Array<Item>;
+  items?: Array<Item>;
   isLoading: boolean;
 }
 

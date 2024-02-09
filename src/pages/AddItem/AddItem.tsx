@@ -1,15 +1,16 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Form } from 'src/components/ui/Form';
-
-import axiosInstance from'src/api/';
 
 import { AddPhoto } from 'src/components/ui/AddPhoto';
 import { AddCategory } from 'src/components/ui/AddCategory';
 import { StarRating } from 'src/components/base/StarRating';
 import { BaseSelect } from 'src/components/base/Select';
 import { FaPlus } from 'react-icons/fa6';
-import { listCategories } from 'src/graphql/queries';
 import { createItem } from 'src/graphql/mutations';
+
+import { fetchAllItems, fetchCategories } from 'src/store/reducers';
+import { useAppDispatch } from 'src/store/configureStore';
 
 import { useSelector } from 'react-redux';
 
@@ -24,6 +25,9 @@ import RouteTransition from 'src/components/transition/RouteTransition';
 import { fieldsConfig } from './config';
 
 export const AddItem = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
   const [rating, setRating] = useState([3]);
   const [modalOpen, setModalOpen] = useState(false);
   const [category, setCategory] = useState<Selection>(new Set());
@@ -96,6 +100,7 @@ export const AddItem = () => {
   }
   
   // ============================ SUBMIT FORM ===============================
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async() => {
     if (!category.size) {
@@ -116,17 +121,22 @@ export const AddItem = () => {
     itemObject.categoryItemsId = categoriesList[categoryIndex].id
     itemObject.rating = String(rating[0])
 
+    setIsLoading(true);
+
     if (photo) {
       itemObject.image = await uploadPhoto()
     }
-    console.log(itemObject)
+
     const res = await client.graphql({
       query: createItem,
       variables: {
         input: itemObject
       }
     });
-    console.log(res)
+
+    setIsLoading(false);
+    dispatch(fetchAllItems());
+    navigate('/');
   }
 
   const uploadPhoto = async() => {
@@ -202,6 +212,7 @@ export const AddItem = () => {
             variant="bordered"
             color="warning"
             radius="sm"
+            isLoading={isLoading}
             onClick={handleSubmit}
           >
             <span className="text-lg font-semibold tracking-wide">Add Item</span>

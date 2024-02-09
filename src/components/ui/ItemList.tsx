@@ -1,12 +1,11 @@
 import { FaCircle, FaChevronRight } from "react-icons/fa";
 
 interface ItemListProps {
-  id: number;
   name: string;
   count: number;
 }
 
-export const ItemList = ({name, id, count}: ItemListProps) => {
+export const ItemList = ({name, count}: ItemListProps) => {
   return (
     <div className='w-full flex p-4 rounded-sm items-center bg-zinc-900'>
       <FaCircle className='mr-4 ml-2' size={16} color='#F4A423'/>
