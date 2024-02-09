@@ -16,7 +16,7 @@ export default function Category({items, isLoading}: CardsViewProps) {
         <div className="p-3 grid grid-cols-2 gap-2">
           {items &&
             items.map((item) => (
-              <Link key={item.id} to={`/details/${item.id}`} state={item}>
+              <Link key={item.id} to={`/categories/details/${item.id}`} state={item}>
                 <ItemCard key={item.id} {...item}  />
               </Link>
             ))}

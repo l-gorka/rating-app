@@ -20,7 +20,7 @@ export default function CategoriesList() {
       <div className='flex flex-col p-3 gap-2'>
         {categoriesList &&
           categoriesList.map((item) => (
-            <Link key={item.id} to={`/category/${item.id}`}>
+            <Link key={item.id} to={`/categories/${item.id}`}>
               <ItemList {...item} />
             </Link>
           ))

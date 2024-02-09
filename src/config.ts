@@ -43,12 +43,12 @@ export const routes = [
     component: User,
   },
   {
-    path: '/category/:id',
+    path: '/categories/:id',
     exact: true,
     component: Category,
   },
   {
-    path: '/details/:id',
+    path: '/categories/details/:id',
     exact: true,
     component: Details,
   },

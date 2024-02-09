@@ -5,14 +5,16 @@ import { AnimatePresence } from 'framer-motion';
 import BottomNav from 'src/components/ui/BottomNav';
 import { useEffect } from 'react';
 
-
-import { fetchCategories, fetchAllItems } from 'src/store/reducers';
+import { fetchCategories, fetchAllItems, setUserEmail } from 'src/store/reducers';
+import { useAppDispatch } from './store/configureStore';
 
 import { Amplify } from 'aws-amplify';
+import { fetchAuthSession } from '@aws-amplify/auth';
 import { withAuthenticator } from '@aws-amplify/ui-react';
+
 import '@aws-amplify/ui-react/styles.css';
+
 import config from './amplifyconfiguration.json';
-import { useAppDispatch } from './store/configureStore';
 Amplify.configure(config);
 
 export function App() {
@@ -23,14 +25,18 @@ export function App() {
     async function onAppStart() {
       dispatch(fetchCategories());
       dispatch(fetchAllItems());
+
+      const {tokens } = await fetchAuthSession();
+
+      dispatch(setUserEmail(tokens?.idToken?.payload?.email));
     }
 
     onAppStart();
-  }, [])
+  }, []);
 
   return (
     <>
-      <div className="flex flex-col w-full h-dvh max-w-screen-sm mx-auto ">
+      <div className="flex w-full h-dvh max-w-screen-sm mx-auto ">
         <div className="flex-grow overflow-scroll relative">
           <AnimatePresence>
             <Routes location={location} key={location.pathname}>
@@ -40,12 +46,14 @@ export function App() {
             </Routes>
           </AnimatePresence>
         </div>
-        <div className='w-full max-w-screen-sm mx-auto'>
-          <BottomNav options={bottomNavOptions} />
-        </div>
+        <BottomNav options={bottomNavOptions} />
       </div>
     </>
   );
 }
 
-export default withAuthenticator(App);
+const app = withAuthenticator(App, {
+  variation: 'modal',
+});
+
+export default app;

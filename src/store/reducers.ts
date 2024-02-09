@@ -13,8 +13,12 @@ const app = createSlice({
     categoriesList: [] as Category[],
     itemsStatus: 'idle',
     itemsList: [] as Partial<Item>[],
+    userEmail: '',
   },
   reducers: {
+    setUserEmail: (state, action) => {
+      state.userEmail = action.payload
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -56,6 +60,7 @@ export const fetchAllItems = createAsyncThunk('app/fetchAllItems', async () => {
 })
 
 export const { reducer } = app;
+export const { setUserEmail } = app.actions;
 export default app.reducer
 
 export type IRootState = ReturnType<typeof app.reducer>

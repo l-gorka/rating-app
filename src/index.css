@@ -2,6 +2,62 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  /* overflow: hidden; */
+:root {
+  --accent: #F4A423;
+}
+
+.amplify-tabs {
+  border-radius: 0.5rem !important;
+}
+
+.amplify-tabs__panel {
+  background: black;
+  color: var(--accent) !important;
+}
+
+.amplify-tabs__panel button {
+  background: black !important;
+  border-color: #F4A423;
+  color: var(--accent) !important;
+}
+
+.amplify-label {
+  color: white;
+}
+
+.amplify-tabs__panel button span {
+  background: black !important;
+  border-color: #F4A423;
+  color: var(--accent) !important;
+
+}
+
+.amplify-divider--horizontal::after {
+  background-color: black !important;
+  color: white;
+}
+
+.amplify-tabs__panel input {
+  background: black !important;
+  border-color: white;
+  color: white;
+}
+
+.amplify-tabs__panel input:focus {
+  border-color: var(--accent) !important;
+}
+
+.amplify-field__show-password {
+  border-color: white !important;
+}
+
+.amplify-tabs__item {
+  background-color: black;
+  color: white !important;
+}
+
+.amplify-tabs__item--active {
+  background-color: black;
+  color: var(--accent) !important;
+  border-color: var(--accent) !important;
 }
