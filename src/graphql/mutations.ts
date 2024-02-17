@@ -90,6 +90,7 @@ export const createItem = /* GraphQL */ `mutation CreateItem(
     description
     image
     createdAt
+    type
     updatedAt
     categoryItemsId
     owner
@@ -119,6 +120,7 @@ export const updateItem = /* GraphQL */ `mutation UpdateItem(
     description
     image
     createdAt
+    type
     updatedAt
     categoryItemsId
     owner
@@ -148,6 +150,7 @@ export const deleteItem = /* GraphQL */ `mutation DeleteItem(
     description
     image
     createdAt
+    type
     updatedAt
     categoryItemsId
     owner

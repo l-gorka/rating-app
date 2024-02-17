@@ -14,6 +14,7 @@ export default function Home() {
   return (
     <RouteTransition compKey="1">
       <NavBar title="Recents" />
+
       <CardsView isLoading={isLoading} items={itemList as Item[]} />
     </RouteTransition>
   );

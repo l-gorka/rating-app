@@ -64,6 +64,7 @@ export const getItem = /* GraphQL */ `query GetItem($id: ID!) {
     description
     image
     createdAt
+    type
     updatedAt
     categoryItemsId
     owner
@@ -84,6 +85,7 @@ export const listItems = /* GraphQL */ `query ListItems(
       description
       image
       createdAt
+      type
       updatedAt
       categoryItemsId
       owner
@@ -94,3 +96,40 @@ export const listItems = /* GraphQL */ `query ListItems(
   }
 }
 ` as GeneratedQuery<APITypes.ListItemsQueryVariables, APITypes.ListItemsQuery>;
+export const itemsByDate = /* GraphQL */ `query ItemsByDate(
+  $type: String!
+  $createdAt: ModelStringKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelItemFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  itemsByDate(
+    type: $type
+    createdAt: $createdAt
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      title
+      rating
+      description
+      image
+      createdAt
+      type
+      updatedAt
+      categoryItemsId
+      owner
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ItemsByDateQueryVariables,
+  APITypes.ItemsByDateQuery
+>;

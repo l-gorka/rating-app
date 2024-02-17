@@ -31,31 +31,31 @@ export const routes = [
     path: '/',
     exact: true,
     component: Home,
+    order: 1
   },
   {
     path: '/categories',
     exact: true,
     component: CategoriesList,
-  },
-  {
-    path: '/user',
-    exact: true,
-    component: User,
+    order: 2
   },
   {
     path: '/categories/:id',
     exact: true,
     component: Category,
+    order: 3
   },
   {
     path: '/categories/details/:id',
     exact: true,
     component: Details,
+    order: 4
   },
   {
     path: '/add-item',
     exact: true,
     component: AddItem,
+    order: 5
   },
   {
     path: '/login',

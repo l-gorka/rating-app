@@ -90,6 +90,7 @@ export const onCreateItem = /* GraphQL */ `subscription OnCreateItem(
     description
     image
     createdAt
+    type
     updatedAt
     categoryItemsId
     owner
@@ -119,6 +120,7 @@ export const onUpdateItem = /* GraphQL */ `subscription OnUpdateItem(
     description
     image
     createdAt
+    type
     updatedAt
     categoryItemsId
     owner
@@ -148,6 +150,7 @@ export const onDeleteItem = /* GraphQL */ `subscription OnDeleteItem(
     description
     image
     createdAt
+    type
     updatedAt
     categoryItemsId
     owner

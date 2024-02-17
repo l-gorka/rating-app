@@ -79,6 +79,7 @@ export type Item = {
   description?: string | null,
   image?: string | null,
   createdAt: string,
+  type: string,
   updatedAt: string,
   categoryItemsId?: string | null,
   owner?: string | null,
@@ -99,6 +100,8 @@ export type CreateItemInput = {
   rating: string,
   description?: string | null,
   image?: string | null,
+  createdAt?: string | null,
+  type: string,
   categoryItemsId?: string | null,
 };
 
@@ -107,6 +110,8 @@ export type ModelItemConditionInput = {
   rating?: ModelStringInput | null,
   description?: ModelStringInput | null,
   image?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
+  type?: ModelStringInput | null,
   and?: Array< ModelItemConditionInput | null > | null,
   or?: Array< ModelItemConditionInput | null > | null,
   not?: ModelItemConditionInput | null,
@@ -135,6 +140,8 @@ export type UpdateItemInput = {
   rating?: string | null,
   description?: string | null,
   image?: string | null,
+  createdAt?: string | null,
+  type?: string | null,
   categoryItemsId?: string | null,
 };
 
@@ -162,11 +169,29 @@ export type ModelItemFilterInput = {
   rating?: ModelStringInput | null,
   description?: ModelStringInput | null,
   image?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
+  type?: ModelStringInput | null,
   and?: Array< ModelItemFilterInput | null > | null,
   or?: Array< ModelItemFilterInput | null > | null,
   not?: ModelItemFilterInput | null,
   categoryItemsId?: ModelIDInput | null,
 };
+
+export type ModelStringKeyConditionInput = {
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+};
+
+export enum ModelSortDirection {
+  ASC = "ASC",
+  DESC = "DESC",
+}
+
 
 export type ModelSubscriptionCategoryFilterInput = {
   id?: ModelSubscriptionIDInput | null,
@@ -211,6 +236,8 @@ export type ModelSubscriptionItemFilterInput = {
   rating?: ModelSubscriptionStringInput | null,
   description?: ModelSubscriptionStringInput | null,
   image?: ModelSubscriptionStringInput | null,
+  createdAt?: ModelSubscriptionStringInput | null,
+  type?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionItemFilterInput | null > | null,
   or?: Array< ModelSubscriptionItemFilterInput | null > | null,
 };
@@ -297,6 +324,7 @@ export type CreateItemMutation = {
     description?: string | null,
     image?: string | null,
     createdAt: string,
+    type: string,
     updatedAt: string,
     categoryItemsId?: string | null,
     owner?: string | null,
@@ -325,6 +353,7 @@ export type UpdateItemMutation = {
     description?: string | null,
     image?: string | null,
     createdAt: string,
+    type: string,
     updatedAt: string,
     categoryItemsId?: string | null,
     owner?: string | null,
@@ -353,6 +382,7 @@ export type DeleteItemMutation = {
     description?: string | null,
     image?: string | null,
     createdAt: string,
+    type: string,
     updatedAt: string,
     categoryItemsId?: string | null,
     owner?: string | null,
@@ -420,6 +450,7 @@ export type GetItemQuery = {
     description?: string | null,
     image?: string | null,
     createdAt: string,
+    type: string,
     updatedAt: string,
     categoryItemsId?: string | null,
     owner?: string | null,
@@ -443,6 +474,36 @@ export type ListItemsQuery = {
       description?: string | null,
       image?: string | null,
       createdAt: string,
+      type: string,
+      updatedAt: string,
+      categoryItemsId?: string | null,
+      owner?: string | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type ItemsByDateQueryVariables = {
+  type: string,
+  createdAt?: ModelStringKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelItemFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ItemsByDateQuery = {
+  itemsByDate?:  {
+    __typename: "ModelItemConnection",
+    items:  Array< {
+      __typename: "Item",
+      id: string,
+      title: string,
+      rating: string,
+      description?: string | null,
+      image?: string | null,
+      createdAt: string,
+      type: string,
       updatedAt: string,
       categoryItemsId?: string | null,
       owner?: string | null,
@@ -533,6 +594,7 @@ export type OnCreateItemSubscription = {
     description?: string | null,
     image?: string | null,
     createdAt: string,
+    type: string,
     updatedAt: string,
     categoryItemsId?: string | null,
     owner?: string | null,
@@ -561,6 +623,7 @@ export type OnUpdateItemSubscription = {
     description?: string | null,
     image?: string | null,
     createdAt: string,
+    type: string,
     updatedAt: string,
     categoryItemsId?: string | null,
     owner?: string | null,
@@ -589,6 +652,7 @@ export type OnDeleteItemSubscription = {
     description?: string | null,
     image?: string | null,
     createdAt: string,
+    type: string,
     updatedAt: string,
     categoryItemsId?: string | null,
     owner?: string | null,

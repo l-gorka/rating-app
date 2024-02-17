@@ -127,6 +127,8 @@ export const AddItem = () => {
       itemObject.image = await uploadPhoto()
     }
 
+    itemObject.type = 'Item'
+
     const res = await client.graphql({
       query: createItem,
       variables: {
@@ -156,7 +158,7 @@ export const AddItem = () => {
   }
 
   return (
-    <RouteTransition compKey="details">
+    <RouteTransition compKey="details" transition={2}>
       <div className="relative mb-12 w-full aspect-square">
         <AddPhoto onUpload={handlePhotoUpload} />
         <Card

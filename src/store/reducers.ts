@@ -2,9 +2,9 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
 import client from 'src/api'
 
-import { listCategories, listItems } from 'src/graphql/queries'
+import { listCategories, itemsByDate } from 'src/graphql/queries'
 
-import { Category, Item} from 'api'
+import { Category, Item, ModelSortDirection} from 'api'
 
 const app = createSlice({
   name: 'app',
@@ -14,11 +14,15 @@ const app = createSlice({
     itemsStatus: 'idle',
     itemsList: [] as Partial<Item>[],
     userEmail: '',
+    previousRoute: null,
   },
   reducers: {
     setUserEmail: (state, action) => {
       state.userEmail = action.payload
-    }
+    },
+    setCurrentRoute: (state, action) => {
+      state.previousRoute = action.payload
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -51,16 +55,17 @@ export const fetchCategories = createAsyncThunk('app/fetchCategories', async () 
 
 export const fetchAllItems = createAsyncThunk('app/fetchAllItems', async () => {
   try {
-    const {data} =  await client.graphql({query: listItems});
+    const sortDirection = 'DESC' as ModelSortDirection
+    const {data} =  await client.graphql({query: itemsByDate, variables: {type: 'Item', sortDirection}});
 
-    return data.listItems.items;
+    return data.itemsByDate.items;
   } catch (error) {
     return []
   }
 })
 
 export const { reducer } = app;
-export const { setUserEmail } = app.actions;
+export const { setUserEmail, setCurrentRoute } = app.actions;
 export default app.reducer
 
 export type IRootState = ReturnType<typeof app.reducer>

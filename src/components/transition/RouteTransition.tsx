@@ -1,6 +1,8 @@
 import { motion, easeInOut } from 'framer-motion';
+import { useLocation } from 'react-router-dom';
 
 const RouteTransition = ({ children, compKey }: { children: React.ReactNode; compKey: string }) => {
+
   return (
     <motion.div
       layout

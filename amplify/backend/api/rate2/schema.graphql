@@ -19,4 +19,11 @@ type Item @model
   rating: String!
   description: String
   image: String
+  createdAt: String!
+  type: String!
+    @index(
+      name: "itemsByDate"
+      queryField: "itemsByDate"
+      sortKeyFields: ["createdAt"]
+    )
 }

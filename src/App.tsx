@@ -21,6 +21,8 @@ export function App() {
   const location = useLocation();
   const dispatch = useAppDispatch();
 
+
+
   useEffect(() => {
     async function onAppStart() {
       dispatch(fetchCategories());
@@ -38,7 +40,7 @@ export function App() {
     <>
       <div className="flex w-full h-dvh max-w-screen-sm mx-auto ">
         <div className="flex-grow overflow-scroll relative">
-          <AnimatePresence>
+          <AnimatePresence initial={false}>
             <Routes location={location} key={location.pathname}>
               {routes.map((route) => (
                 <Route key={route.path} path={route.path} element={<route.component />} />
@@ -54,6 +56,7 @@ export function App() {
 
 const app = withAuthenticator(App, {
   variation: 'modal',
+
 });
 
 export default app;
