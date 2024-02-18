@@ -16,6 +16,10 @@ export const getCategory = /* GraphQL */ `query GetCategory($id: ID!) {
       nextToken
       __typename
     }
+    fields {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     owner
@@ -47,6 +51,107 @@ export const listCategories = /* GraphQL */ `query ListCategories(
 ` as GeneratedQuery<
   APITypes.ListCategoriesQueryVariables,
   APITypes.ListCategoriesQuery
+>;
+export const getField = /* GraphQL */ `query GetField($id: ID!) {
+  getField(id: $id) {
+    id
+    type
+    title
+    category {
+      id
+      name
+      createdAt
+      updatedAt
+      owner
+      __typename
+    }
+    fieldOptions {
+      nextToken
+      __typename
+    }
+    createdAt
+    updatedAt
+    categoryFieldsId
+    owner
+    __typename
+  }
+}
+` as GeneratedQuery<APITypes.GetFieldQueryVariables, APITypes.GetFieldQuery>;
+export const listFields = /* GraphQL */ `query ListFields(
+  $filter: ModelFieldFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listFields(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      type
+      title
+      createdAt
+      updatedAt
+      categoryFieldsId
+      owner
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ListFieldsQueryVariables,
+  APITypes.ListFieldsQuery
+>;
+export const getFieldOption = /* GraphQL */ `query GetFieldOption($id: ID!) {
+  getFieldOption(id: $id) {
+    id
+    field {
+      id
+      type
+      title
+      createdAt
+      updatedAt
+      categoryFieldsId
+      owner
+      __typename
+    }
+    title
+    type
+    color
+    createdAt
+    updatedAt
+    fieldFieldOptionsId
+    owner
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.GetFieldOptionQueryVariables,
+  APITypes.GetFieldOptionQuery
+>;
+export const listFieldOptions = /* GraphQL */ `query ListFieldOptions(
+  $filter: ModelFieldOptionFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listFieldOptions(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      title
+      type
+      color
+      createdAt
+      updatedAt
+      fieldFieldOptionsId
+      owner
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ListFieldOptionsQueryVariables,
+  APITypes.ListFieldOptionsQuery
 >;
 export const getItem = /* GraphQL */ `query GetItem($id: ID!) {
   getItem(id: $id) {

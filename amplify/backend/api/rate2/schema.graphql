@@ -8,6 +8,27 @@ type Category @model
   id: ID!
   name: String!
   items: [Item] @hasMany
+  fields: [Field] @hasMany
+}
+
+type Field @model 
+@auth(rules: [{ allow: owner }])
+{
+  id: ID!
+  type: String!
+  title: String
+  category: Category @belongsTo
+  fieldOptions: [FieldOption] @hasMany
+}
+
+type FieldOption @model
+@auth(rules: [{ allow: owner }])
+{
+  id: ID!
+  field: Field @belongsTo
+  title: String
+  type: String!
+  color: String
 }
 
 type Item @model

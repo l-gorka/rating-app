@@ -19,6 +19,10 @@ export const onCreateCategory = /* GraphQL */ `subscription OnCreateCategory(
       nextToken
       __typename
     }
+    fields {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     owner
@@ -37,6 +41,10 @@ export const onUpdateCategory = /* GraphQL */ `subscription OnUpdateCategory(
     id
     name
     items {
+      nextToken
+      __typename
+    }
+    fields {
       nextToken
       __typename
     }
@@ -61,6 +69,10 @@ export const onDeleteCategory = /* GraphQL */ `subscription OnDeleteCategory(
       nextToken
       __typename
     }
+    fields {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     owner
@@ -70,6 +82,189 @@ export const onDeleteCategory = /* GraphQL */ `subscription OnDeleteCategory(
 ` as GeneratedSubscription<
   APITypes.OnDeleteCategorySubscriptionVariables,
   APITypes.OnDeleteCategorySubscription
+>;
+export const onCreateField = /* GraphQL */ `subscription OnCreateField(
+  $filter: ModelSubscriptionFieldFilterInput
+  $owner: String
+) {
+  onCreateField(filter: $filter, owner: $owner) {
+    id
+    type
+    title
+    category {
+      id
+      name
+      createdAt
+      updatedAt
+      owner
+      __typename
+    }
+    fieldOptions {
+      nextToken
+      __typename
+    }
+    createdAt
+    updatedAt
+    categoryFieldsId
+    owner
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnCreateFieldSubscriptionVariables,
+  APITypes.OnCreateFieldSubscription
+>;
+export const onUpdateField = /* GraphQL */ `subscription OnUpdateField(
+  $filter: ModelSubscriptionFieldFilterInput
+  $owner: String
+) {
+  onUpdateField(filter: $filter, owner: $owner) {
+    id
+    type
+    title
+    category {
+      id
+      name
+      createdAt
+      updatedAt
+      owner
+      __typename
+    }
+    fieldOptions {
+      nextToken
+      __typename
+    }
+    createdAt
+    updatedAt
+    categoryFieldsId
+    owner
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnUpdateFieldSubscriptionVariables,
+  APITypes.OnUpdateFieldSubscription
+>;
+export const onDeleteField = /* GraphQL */ `subscription OnDeleteField(
+  $filter: ModelSubscriptionFieldFilterInput
+  $owner: String
+) {
+  onDeleteField(filter: $filter, owner: $owner) {
+    id
+    type
+    title
+    category {
+      id
+      name
+      createdAt
+      updatedAt
+      owner
+      __typename
+    }
+    fieldOptions {
+      nextToken
+      __typename
+    }
+    createdAt
+    updatedAt
+    categoryFieldsId
+    owner
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnDeleteFieldSubscriptionVariables,
+  APITypes.OnDeleteFieldSubscription
+>;
+export const onCreateFieldOption = /* GraphQL */ `subscription OnCreateFieldOption(
+  $filter: ModelSubscriptionFieldOptionFilterInput
+  $owner: String
+) {
+  onCreateFieldOption(filter: $filter, owner: $owner) {
+    id
+    field {
+      id
+      type
+      title
+      createdAt
+      updatedAt
+      categoryFieldsId
+      owner
+      __typename
+    }
+    title
+    type
+    color
+    createdAt
+    updatedAt
+    fieldFieldOptionsId
+    owner
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnCreateFieldOptionSubscriptionVariables,
+  APITypes.OnCreateFieldOptionSubscription
+>;
+export const onUpdateFieldOption = /* GraphQL */ `subscription OnUpdateFieldOption(
+  $filter: ModelSubscriptionFieldOptionFilterInput
+  $owner: String
+) {
+  onUpdateFieldOption(filter: $filter, owner: $owner) {
+    id
+    field {
+      id
+      type
+      title
+      createdAt
+      updatedAt
+      categoryFieldsId
+      owner
+      __typename
+    }
+    title
+    type
+    color
+    createdAt
+    updatedAt
+    fieldFieldOptionsId
+    owner
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnUpdateFieldOptionSubscriptionVariables,
+  APITypes.OnUpdateFieldOptionSubscription
+>;
+export const onDeleteFieldOption = /* GraphQL */ `subscription OnDeleteFieldOption(
+  $filter: ModelSubscriptionFieldOptionFilterInput
+  $owner: String
+) {
+  onDeleteFieldOption(filter: $filter, owner: $owner) {
+    id
+    field {
+      id
+      type
+      title
+      createdAt
+      updatedAt
+      categoryFieldsId
+      owner
+      __typename
+    }
+    title
+    type
+    color
+    createdAt
+    updatedAt
+    fieldFieldOptionsId
+    owner
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnDeleteFieldOptionSubscriptionVariables,
+  APITypes.OnDeleteFieldOptionSubscription
 >;
 export const onCreateItem = /* GraphQL */ `subscription OnCreateItem(
   $filter: ModelSubscriptionItemFilterInput

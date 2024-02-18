@@ -59,6 +59,7 @@ export type Category = {
   id: string,
   name: string,
   items?: ModelItemConnection | null,
+  fields?: ModelFieldConnection | null,
   createdAt: string,
   updatedAt: string,
   owner?: string | null,
@@ -85,12 +86,123 @@ export type Item = {
   owner?: string | null,
 };
 
+export type ModelFieldConnection = {
+  __typename: "ModelFieldConnection",
+  items:  Array<Field | null >,
+  nextToken?: string | null,
+};
+
+export type Field = {
+  __typename: "Field",
+  id: string,
+  type: string,
+  title?: string | null,
+  category?: Category | null,
+  fieldOptions?: ModelFieldOptionConnection | null,
+  createdAt: string,
+  updatedAt: string,
+  categoryFieldsId?: string | null,
+  owner?: string | null,
+};
+
+export type ModelFieldOptionConnection = {
+  __typename: "ModelFieldOptionConnection",
+  items:  Array<FieldOption | null >,
+  nextToken?: string | null,
+};
+
+export type FieldOption = {
+  __typename: "FieldOption",
+  id: string,
+  field?: Field | null,
+  title?: string | null,
+  type: string,
+  color?: string | null,
+  createdAt: string,
+  updatedAt: string,
+  fieldFieldOptionsId?: string | null,
+  owner?: string | null,
+};
+
 export type UpdateCategoryInput = {
   id: string,
   name?: string | null,
 };
 
 export type DeleteCategoryInput = {
+  id: string,
+};
+
+export type CreateFieldInput = {
+  id?: string | null,
+  type: string,
+  title?: string | null,
+  categoryFieldsId?: string | null,
+};
+
+export type ModelFieldConditionInput = {
+  type?: ModelStringInput | null,
+  title?: ModelStringInput | null,
+  and?: Array< ModelFieldConditionInput | null > | null,
+  or?: Array< ModelFieldConditionInput | null > | null,
+  not?: ModelFieldConditionInput | null,
+  categoryFieldsId?: ModelIDInput | null,
+};
+
+export type ModelIDInput = {
+  ne?: string | null,
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  contains?: string | null,
+  notContains?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+  size?: ModelSizeInput | null,
+};
+
+export type UpdateFieldInput = {
+  id: string,
+  type?: string | null,
+  title?: string | null,
+  categoryFieldsId?: string | null,
+};
+
+export type DeleteFieldInput = {
+  id: string,
+};
+
+export type CreateFieldOptionInput = {
+  id?: string | null,
+  title?: string | null,
+  type: string,
+  color?: string | null,
+  fieldFieldOptionsId?: string | null,
+};
+
+export type ModelFieldOptionConditionInput = {
+  title?: ModelStringInput | null,
+  type?: ModelStringInput | null,
+  color?: ModelStringInput | null,
+  and?: Array< ModelFieldOptionConditionInput | null > | null,
+  or?: Array< ModelFieldOptionConditionInput | null > | null,
+  not?: ModelFieldOptionConditionInput | null,
+  fieldFieldOptionsId?: ModelIDInput | null,
+};
+
+export type UpdateFieldOptionInput = {
+  id: string,
+  title?: string | null,
+  type?: string | null,
+  color?: string | null,
+  fieldFieldOptionsId?: string | null,
+};
+
+export type DeleteFieldOptionInput = {
   id: string,
 };
 
@@ -116,22 +228,6 @@ export type ModelItemConditionInput = {
   or?: Array< ModelItemConditionInput | null > | null,
   not?: ModelItemConditionInput | null,
   categoryItemsId?: ModelIDInput | null,
-};
-
-export type ModelIDInput = {
-  ne?: string | null,
-  eq?: string | null,
-  le?: string | null,
-  lt?: string | null,
-  ge?: string | null,
-  gt?: string | null,
-  contains?: string | null,
-  notContains?: string | null,
-  between?: Array< string | null > | null,
-  beginsWith?: string | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
-  size?: ModelSizeInput | null,
 };
 
 export type UpdateItemInput = {
@@ -161,6 +257,27 @@ export type ModelCategoryConnection = {
   __typename: "ModelCategoryConnection",
   items:  Array<Category | null >,
   nextToken?: string | null,
+};
+
+export type ModelFieldFilterInput = {
+  id?: ModelIDInput | null,
+  type?: ModelStringInput | null,
+  title?: ModelStringInput | null,
+  and?: Array< ModelFieldFilterInput | null > | null,
+  or?: Array< ModelFieldFilterInput | null > | null,
+  not?: ModelFieldFilterInput | null,
+  categoryFieldsId?: ModelIDInput | null,
+};
+
+export type ModelFieldOptionFilterInput = {
+  id?: ModelIDInput | null,
+  title?: ModelStringInput | null,
+  type?: ModelStringInput | null,
+  color?: ModelStringInput | null,
+  and?: Array< ModelFieldOptionFilterInput | null > | null,
+  or?: Array< ModelFieldOptionFilterInput | null > | null,
+  not?: ModelFieldOptionFilterInput | null,
+  fieldFieldOptionsId?: ModelIDInput | null,
 };
 
 export type ModelItemFilterInput = {
@@ -230,6 +347,23 @@ export type ModelSubscriptionStringInput = {
   notIn?: Array< string | null > | null,
 };
 
+export type ModelSubscriptionFieldFilterInput = {
+  id?: ModelSubscriptionIDInput | null,
+  type?: ModelSubscriptionStringInput | null,
+  title?: ModelSubscriptionStringInput | null,
+  and?: Array< ModelSubscriptionFieldFilterInput | null > | null,
+  or?: Array< ModelSubscriptionFieldFilterInput | null > | null,
+};
+
+export type ModelSubscriptionFieldOptionFilterInput = {
+  id?: ModelSubscriptionIDInput | null,
+  title?: ModelSubscriptionStringInput | null,
+  type?: ModelSubscriptionStringInput | null,
+  color?: ModelSubscriptionStringInput | null,
+  and?: Array< ModelSubscriptionFieldOptionFilterInput | null > | null,
+  or?: Array< ModelSubscriptionFieldOptionFilterInput | null > | null,
+};
+
 export type ModelSubscriptionItemFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   title?: ModelSubscriptionStringInput | null,
@@ -256,6 +390,10 @@ export type CreateCategoryMutation = {
       __typename: "ModelItemConnection",
       nextToken?: string | null,
     } | null,
+    fields?:  {
+      __typename: "ModelFieldConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
     owner?: string | null,
@@ -274,6 +412,10 @@ export type UpdateCategoryMutation = {
     name: string,
     items?:  {
       __typename: "ModelItemConnection",
+      nextToken?: string | null,
+    } | null,
+    fields?:  {
+      __typename: "ModelFieldConnection",
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -296,8 +438,189 @@ export type DeleteCategoryMutation = {
       __typename: "ModelItemConnection",
       nextToken?: string | null,
     } | null,
+    fields?:  {
+      __typename: "ModelFieldConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type CreateFieldMutationVariables = {
+  input: CreateFieldInput,
+  condition?: ModelFieldConditionInput | null,
+};
+
+export type CreateFieldMutation = {
+  createField?:  {
+    __typename: "Field",
+    id: string,
+    type: string,
+    title?: string | null,
+    category?:  {
+      __typename: "Category",
+      id: string,
+      name: string,
+      createdAt: string,
+      updatedAt: string,
+      owner?: string | null,
+    } | null,
+    fieldOptions?:  {
+      __typename: "ModelFieldOptionConnection",
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    categoryFieldsId?: string | null,
+    owner?: string | null,
+  } | null,
+};
+
+export type UpdateFieldMutationVariables = {
+  input: UpdateFieldInput,
+  condition?: ModelFieldConditionInput | null,
+};
+
+export type UpdateFieldMutation = {
+  updateField?:  {
+    __typename: "Field",
+    id: string,
+    type: string,
+    title?: string | null,
+    category?:  {
+      __typename: "Category",
+      id: string,
+      name: string,
+      createdAt: string,
+      updatedAt: string,
+      owner?: string | null,
+    } | null,
+    fieldOptions?:  {
+      __typename: "ModelFieldOptionConnection",
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    categoryFieldsId?: string | null,
+    owner?: string | null,
+  } | null,
+};
+
+export type DeleteFieldMutationVariables = {
+  input: DeleteFieldInput,
+  condition?: ModelFieldConditionInput | null,
+};
+
+export type DeleteFieldMutation = {
+  deleteField?:  {
+    __typename: "Field",
+    id: string,
+    type: string,
+    title?: string | null,
+    category?:  {
+      __typename: "Category",
+      id: string,
+      name: string,
+      createdAt: string,
+      updatedAt: string,
+      owner?: string | null,
+    } | null,
+    fieldOptions?:  {
+      __typename: "ModelFieldOptionConnection",
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    categoryFieldsId?: string | null,
+    owner?: string | null,
+  } | null,
+};
+
+export type CreateFieldOptionMutationVariables = {
+  input: CreateFieldOptionInput,
+  condition?: ModelFieldOptionConditionInput | null,
+};
+
+export type CreateFieldOptionMutation = {
+  createFieldOption?:  {
+    __typename: "FieldOption",
+    id: string,
+    field?:  {
+      __typename: "Field",
+      id: string,
+      type: string,
+      title?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      categoryFieldsId?: string | null,
+      owner?: string | null,
+    } | null,
+    title?: string | null,
+    type: string,
+    color?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    fieldFieldOptionsId?: string | null,
+    owner?: string | null,
+  } | null,
+};
+
+export type UpdateFieldOptionMutationVariables = {
+  input: UpdateFieldOptionInput,
+  condition?: ModelFieldOptionConditionInput | null,
+};
+
+export type UpdateFieldOptionMutation = {
+  updateFieldOption?:  {
+    __typename: "FieldOption",
+    id: string,
+    field?:  {
+      __typename: "Field",
+      id: string,
+      type: string,
+      title?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      categoryFieldsId?: string | null,
+      owner?: string | null,
+    } | null,
+    title?: string | null,
+    type: string,
+    color?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    fieldFieldOptionsId?: string | null,
+    owner?: string | null,
+  } | null,
+};
+
+export type DeleteFieldOptionMutationVariables = {
+  input: DeleteFieldOptionInput,
+  condition?: ModelFieldOptionConditionInput | null,
+};
+
+export type DeleteFieldOptionMutation = {
+  deleteFieldOption?:  {
+    __typename: "FieldOption",
+    id: string,
+    field?:  {
+      __typename: "Field",
+      id: string,
+      type: string,
+      title?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      categoryFieldsId?: string | null,
+      owner?: string | null,
+    } | null,
+    title?: string | null,
+    type: string,
+    color?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    fieldFieldOptionsId?: string | null,
     owner?: string | null,
   } | null,
 };
@@ -402,6 +725,10 @@ export type GetCategoryQuery = {
       __typename: "ModelItemConnection",
       nextToken?: string | null,
     } | null,
+    fields?:  {
+      __typename: "ModelFieldConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
     owner?: string | null,
@@ -423,6 +750,110 @@ export type ListCategoriesQuery = {
       name: string,
       createdAt: string,
       updatedAt: string,
+      owner?: string | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetFieldQueryVariables = {
+  id: string,
+};
+
+export type GetFieldQuery = {
+  getField?:  {
+    __typename: "Field",
+    id: string,
+    type: string,
+    title?: string | null,
+    category?:  {
+      __typename: "Category",
+      id: string,
+      name: string,
+      createdAt: string,
+      updatedAt: string,
+      owner?: string | null,
+    } | null,
+    fieldOptions?:  {
+      __typename: "ModelFieldOptionConnection",
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    categoryFieldsId?: string | null,
+    owner?: string | null,
+  } | null,
+};
+
+export type ListFieldsQueryVariables = {
+  filter?: ModelFieldFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListFieldsQuery = {
+  listFields?:  {
+    __typename: "ModelFieldConnection",
+    items:  Array< {
+      __typename: "Field",
+      id: string,
+      type: string,
+      title?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      categoryFieldsId?: string | null,
+      owner?: string | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetFieldOptionQueryVariables = {
+  id: string,
+};
+
+export type GetFieldOptionQuery = {
+  getFieldOption?:  {
+    __typename: "FieldOption",
+    id: string,
+    field?:  {
+      __typename: "Field",
+      id: string,
+      type: string,
+      title?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      categoryFieldsId?: string | null,
+      owner?: string | null,
+    } | null,
+    title?: string | null,
+    type: string,
+    color?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    fieldFieldOptionsId?: string | null,
+    owner?: string | null,
+  } | null,
+};
+
+export type ListFieldOptionsQueryVariables = {
+  filter?: ModelFieldOptionFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListFieldOptionsQuery = {
+  listFieldOptions?:  {
+    __typename: "ModelFieldOptionConnection",
+    items:  Array< {
+      __typename: "FieldOption",
+      id: string,
+      title?: string | null,
+      type: string,
+      color?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      fieldFieldOptionsId?: string | null,
       owner?: string | null,
     } | null >,
     nextToken?: string | null,
@@ -526,6 +957,10 @@ export type OnCreateCategorySubscription = {
       __typename: "ModelItemConnection",
       nextToken?: string | null,
     } | null,
+    fields?:  {
+      __typename: "ModelFieldConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
     owner?: string | null,
@@ -544,6 +979,10 @@ export type OnUpdateCategorySubscription = {
     name: string,
     items?:  {
       __typename: "ModelItemConnection",
+      nextToken?: string | null,
+    } | null,
+    fields?:  {
+      __typename: "ModelFieldConnection",
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -566,8 +1005,189 @@ export type OnDeleteCategorySubscription = {
       __typename: "ModelItemConnection",
       nextToken?: string | null,
     } | null,
+    fields?:  {
+      __typename: "ModelFieldConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type OnCreateFieldSubscriptionVariables = {
+  filter?: ModelSubscriptionFieldFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnCreateFieldSubscription = {
+  onCreateField?:  {
+    __typename: "Field",
+    id: string,
+    type: string,
+    title?: string | null,
+    category?:  {
+      __typename: "Category",
+      id: string,
+      name: string,
+      createdAt: string,
+      updatedAt: string,
+      owner?: string | null,
+    } | null,
+    fieldOptions?:  {
+      __typename: "ModelFieldOptionConnection",
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    categoryFieldsId?: string | null,
+    owner?: string | null,
+  } | null,
+};
+
+export type OnUpdateFieldSubscriptionVariables = {
+  filter?: ModelSubscriptionFieldFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnUpdateFieldSubscription = {
+  onUpdateField?:  {
+    __typename: "Field",
+    id: string,
+    type: string,
+    title?: string | null,
+    category?:  {
+      __typename: "Category",
+      id: string,
+      name: string,
+      createdAt: string,
+      updatedAt: string,
+      owner?: string | null,
+    } | null,
+    fieldOptions?:  {
+      __typename: "ModelFieldOptionConnection",
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    categoryFieldsId?: string | null,
+    owner?: string | null,
+  } | null,
+};
+
+export type OnDeleteFieldSubscriptionVariables = {
+  filter?: ModelSubscriptionFieldFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnDeleteFieldSubscription = {
+  onDeleteField?:  {
+    __typename: "Field",
+    id: string,
+    type: string,
+    title?: string | null,
+    category?:  {
+      __typename: "Category",
+      id: string,
+      name: string,
+      createdAt: string,
+      updatedAt: string,
+      owner?: string | null,
+    } | null,
+    fieldOptions?:  {
+      __typename: "ModelFieldOptionConnection",
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    categoryFieldsId?: string | null,
+    owner?: string | null,
+  } | null,
+};
+
+export type OnCreateFieldOptionSubscriptionVariables = {
+  filter?: ModelSubscriptionFieldOptionFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnCreateFieldOptionSubscription = {
+  onCreateFieldOption?:  {
+    __typename: "FieldOption",
+    id: string,
+    field?:  {
+      __typename: "Field",
+      id: string,
+      type: string,
+      title?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      categoryFieldsId?: string | null,
+      owner?: string | null,
+    } | null,
+    title?: string | null,
+    type: string,
+    color?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    fieldFieldOptionsId?: string | null,
+    owner?: string | null,
+  } | null,
+};
+
+export type OnUpdateFieldOptionSubscriptionVariables = {
+  filter?: ModelSubscriptionFieldOptionFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnUpdateFieldOptionSubscription = {
+  onUpdateFieldOption?:  {
+    __typename: "FieldOption",
+    id: string,
+    field?:  {
+      __typename: "Field",
+      id: string,
+      type: string,
+      title?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      categoryFieldsId?: string | null,
+      owner?: string | null,
+    } | null,
+    title?: string | null,
+    type: string,
+    color?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    fieldFieldOptionsId?: string | null,
+    owner?: string | null,
+  } | null,
+};
+
+export type OnDeleteFieldOptionSubscriptionVariables = {
+  filter?: ModelSubscriptionFieldOptionFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnDeleteFieldOptionSubscription = {
+  onDeleteFieldOption?:  {
+    __typename: "FieldOption",
+    id: string,
+    field?:  {
+      __typename: "Field",
+      id: string,
+      type: string,
+      title?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      categoryFieldsId?: string | null,
+      owner?: string | null,
+    } | null,
+    title?: string | null,
+    type: string,
+    color?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    fieldFieldOptionsId?: string | null,
     owner?: string | null,
   } | null,
 };
