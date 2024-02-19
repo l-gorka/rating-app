@@ -43,14 +43,21 @@ export const AddCategory = ({ isOpen, onClose }: AddCategoryProps) => {
     setIsLoading(true);
     
     try {
-      await client.graphql({
+      const res = await client.graphql({
         query: createCategory,
         variables: {
           input: {
             name: state.name,
+            fields: JSON.stringify(['some field', 'another field']),
           }
         }
       });
+
+      console.log(res);
+
+
+
+
     } finally {
       setIsLoading(false);
       await dispatch(fetchCategories());

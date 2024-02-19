@@ -6,7 +6,13 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
+import {
+  Button,
+  Flex,
+  Grid,
+  TextAreaField,
+  TextField,
+} from "@aws-amplify/ui-react";
 import { fetchByPath, getOverrideProps, validateField } from "./utils";
 import { generateClient } from "aws-amplify/api";
 import { createCategory } from "../graphql/mutations";
@@ -24,15 +30,19 @@ export default function CategoryCreateForm(props) {
   } = props;
   const initialValues = {
     name: "",
+    fields: "",
   };
   const [name, setName] = React.useState(initialValues.name);
+  const [fields, setFields] = React.useState(initialValues.fields);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setName(initialValues.name);
+    setFields(initialValues.fields);
     setErrors({});
   };
   const validations = {
     name: [{ type: "Required" }],
+    fields: [{ type: "JSON" }],
   };
   const runValidationTasks = async (
     fieldName,
@@ -61,6 +71,7 @@ export default function CategoryCreateForm(props) {
         event.preventDefault();
         let modelFields = {
           name,
+          fields,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -124,6 +135,7 @@ export default function CategoryCreateForm(props) {
           if (onChange) {
             const modelFields = {
               name: value,
+              fields,
             };
             const result = onChange(modelFields);
             value = result?.name ?? value;
@@ -138,6 +150,30 @@ export default function CategoryCreateForm(props) {
         hasError={errors.name?.hasError}
         {...getOverrideProps(overrides, "name")}
       ></TextField>
+      <TextAreaField
+        label="Fields"
+        isRequired={false}
+        isReadOnly={false}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              fields: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.fields ?? value;
+          }
+          if (errors.fields?.hasError) {
+            runValidationTasks("fields", value);
+          }
+          setFields(value);
+        }}
+        onBlur={() => runValidationTasks("fields", fields)}
+        errorMessage={errors.fields?.errorMessage}
+        hasError={errors.fields?.hasError}
+        {...getOverrideProps(overrides, "fields")}
+      ></TextAreaField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

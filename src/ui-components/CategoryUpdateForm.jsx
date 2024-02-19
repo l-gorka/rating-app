@@ -6,7 +6,13 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
+import {
+  Button,
+  Flex,
+  Grid,
+  TextAreaField,
+  TextField,
+} from "@aws-amplify/ui-react";
 import { fetchByPath, getOverrideProps, validateField } from "./utils";
 import { generateClient } from "aws-amplify/api";
 import { getCategory } from "../graphql/queries";
@@ -26,14 +32,21 @@ export default function CategoryUpdateForm(props) {
   } = props;
   const initialValues = {
     name: "",
+    fields: "",
   };
   const [name, setName] = React.useState(initialValues.name);
+  const [fields, setFields] = React.useState(initialValues.fields);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = categoryRecord
       ? { ...initialValues, ...categoryRecord }
       : initialValues;
     setName(cleanValues.name);
+    setFields(
+      typeof cleanValues.fields === "string" || cleanValues.fields === null
+        ? cleanValues.fields
+        : JSON.stringify(cleanValues.fields)
+    );
     setErrors({});
   };
   const [categoryRecord, setCategoryRecord] = React.useState(categoryModelProp);
@@ -54,6 +67,7 @@ export default function CategoryUpdateForm(props) {
   React.useEffect(resetStateValues, [categoryRecord]);
   const validations = {
     name: [{ type: "Required" }],
+    fields: [{ type: "JSON" }],
   };
   const runValidationTasks = async (
     fieldName,
@@ -82,6 +96,7 @@ export default function CategoryUpdateForm(props) {
         event.preventDefault();
         let modelFields = {
           name,
+          fields: fields ?? null,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -143,6 +158,7 @@ export default function CategoryUpdateForm(props) {
           if (onChange) {
             const modelFields = {
               name: value,
+              fields,
             };
             const result = onChange(modelFields);
             value = result?.name ?? value;
@@ -157,6 +173,31 @@ export default function CategoryUpdateForm(props) {
         hasError={errors.name?.hasError}
         {...getOverrideProps(overrides, "name")}
       ></TextField>
+      <TextAreaField
+        label="Fields"
+        isRequired={false}
+        isReadOnly={false}
+        value={fields}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              fields: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.fields ?? value;
+          }
+          if (errors.fields?.hasError) {
+            runValidationTasks("fields", value);
+          }
+          setFields(value);
+        }}
+        onBlur={() => runValidationTasks("fields", fields)}
+        errorMessage={errors.fields?.errorMessage}
+        hasError={errors.fields?.hasError}
+        {...getOverrideProps(overrides, "fields")}
+      ></TextAreaField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}
