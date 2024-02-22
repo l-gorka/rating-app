@@ -2,6 +2,9 @@ import { Input, Button, ButtonGroup } from '@nextui-org/react';
 import { FaCalendar, FaSearch, FaStar } from 'react-icons/fa';
 
 import { SortingType } from './CardsView';
+import { useEffect } from 'react';
+
+import {  toast } from 'react-toastify';
 
 interface FilterBarProps {
   sorting: 'date' | 'rating';
@@ -18,6 +21,12 @@ export default function FilterBar({ sorting, onSortingChange, onSearchChange }: 
 
     return undefined;
   };
+
+  const notify = () => toast.success('Filter changed');
+
+  useEffect(() => {
+    notify();
+  }, [sorting]);
   return (
     <div className="flex gap-2 px-3 py-2">
       <Input size="sm" placeholder="Search" variant="bordered" startContent={seachIcon} onInput={(e) => onSearchChange((e.target as HTMLInputElement).value)} />

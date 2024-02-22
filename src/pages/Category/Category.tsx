@@ -31,7 +31,7 @@ export default function Category() {
   }, [])
 
   return (
-    <RouteTransition compKey="1">
+    <RouteTransition transitionKey="category">
       <NavBar title={categoryName} />
       <CardsView isLoading={isLoading} items={items} />
     </RouteTransition>

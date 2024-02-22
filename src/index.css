@@ -61,3 +61,10 @@
   color: var(--accent) !important;
   border-color: var(--accent) !important;
 }
+
+.Toastify__toast-container--bottom-center {
+  bottom: 5rem;
+  max-width: 90vw;
+  left: 50%;
+  transform: translateX(-50%);
+}

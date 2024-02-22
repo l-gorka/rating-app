@@ -12,7 +12,7 @@ export default function Home() {
   const isLoading = useSelector((state: IRootState) => state.itemsStatus === 'pending');
 
   return (
-    <RouteTransition compKey="1">
+    <RouteTransition transitionKey="home">
       <NavBar title="Recents" />
 
       <CardsView isLoading={isLoading} items={itemList as Item[]} />

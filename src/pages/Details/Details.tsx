@@ -19,7 +19,7 @@ export default function Details() {
   const { title, description, rating, image } = location.state; 
 
   return (
-    <RouteTransition compKey="details">
+    <RouteTransition transitionKey="details">
       <div className="relative mb-20 w-full aspect-square">
         <Image
           radius="none"

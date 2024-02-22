@@ -158,7 +158,7 @@ export const AddItem = () => {
   }
 
   return (
-    <RouteTransition compKey="details" transition={2}>
+    <RouteTransition transitionKey="addItem">
       <div className="relative mb-12 w-full aspect-square">
         <AddPhoto onUpload={handlePhotoUpload} />
         <Card

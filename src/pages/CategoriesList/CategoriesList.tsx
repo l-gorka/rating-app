@@ -14,7 +14,7 @@ export default function CategoriesList() {
   const isLoading = useSelector((state: IRootState) => state.categoriesStatus === 'pending');
   
   return (
-    <RouteTransition compKey="1">
+    <RouteTransition transitionKey="catList">
       <NavBar title='Categories' />
       <LoadingSpinner isLoading={isLoading}>
       <div className='flex flex-col p-3 gap-2'>

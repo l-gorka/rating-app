@@ -14,14 +14,14 @@ const app = createSlice({
     itemsStatus: 'idle',
     itemsList: [] as Partial<Item>[],
     userEmail: '',
-    previousRoute: null,
+    routeAnimation: 'right',
   },
   reducers: {
     setUserEmail: (state, action) => {
       state.userEmail = action.payload
     },
-    setCurrentRoute: (state, action) => {
-      state.previousRoute = action.payload
+    setRouteAnimation: (state, action) => {
+      state.routeAnimation = action.payload
     },
   },
   extraReducers: (builder) => {
@@ -65,7 +65,7 @@ export const fetchAllItems = createAsyncThunk('app/fetchAllItems', async () => {
 })
 
 export const { reducer } = app;
-export const { setUserEmail, setCurrentRoute } = app.actions;
+export const { setUserEmail, setRouteAnimation } = app.actions;
 export default app.reducer
 
 export type IRootState = ReturnType<typeof app.reducer>
