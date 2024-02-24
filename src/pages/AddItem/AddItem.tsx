@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Form } from 'src/components/ui/Form';
 
 import { AddPhoto } from 'src/components/ui/AddPhoto';
@@ -9,7 +9,7 @@ import { BaseSelect } from 'src/components/base/Select';
 import { FaPlus } from 'react-icons/fa6';
 import { createItem } from 'src/graphql/mutations';
 
-import { fetchAllItems, fetchCategories } from 'src/store/reducers';
+import { fetchAllItems } from 'src/store/reducers';
 import { useAppDispatch } from 'src/store/configureStore';
 
 import { useSelector } from 'react-redux';
@@ -45,6 +45,7 @@ export const AddItem = () => {
   // const categoriesList = useSelector((state) => state.categoriesList);
 
   const handleChangeCategory = (values: Selection) => {
+    console.log(values);
     setCategoryError('');
     setCategory(values);
   };
@@ -156,6 +157,18 @@ export const AddItem = () => {
 
     return data.url
   }
+
+  const location = useLocation();
+
+
+  useEffect(() => {
+    if (location?.state?.id) {
+      const selectedCategory = categoriesList.findIndex ((category) => category.id === location.state.id);
+      const selection = (new Set([String(selectedCategory)]) as Selection)
+
+      setCategory(selection);
+    }
+  }, [])
 
   return (
     <RouteTransition transitionKey="addItem">

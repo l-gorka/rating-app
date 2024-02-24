@@ -41,13 +41,6 @@ export function App() {
     onAppStart();
   }, []);
 
-  useEffect(() => {
-    if (navigationType === 'POP') {
-      // console.log(window.history)
-      // dispatch(setRouteAnimation('left'));
-    }
-  }, [navigationType]);
-
   return (
     <>
       <div className="flex w-full h-dvh max-w-screen-sm mx-auto ">

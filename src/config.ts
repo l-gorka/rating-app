@@ -6,6 +6,7 @@ import Home from './pages/Home/Home';
 import CategoriesList from 'src/pages/CategoriesList/CategoriesList';
 import Category from 'src/pages/Category/Category';
 import Details from 'src/pages/Details/Details';
+import AddCategory from './pages/AddCategory/AddCategory';
 import { AddItem } from 'src/pages/AddItem/AddItem';
 
 export const bottomNavOptions = [
@@ -52,6 +53,12 @@ export const routes = [
     path: '/categories/details/:id',
     exact: true,
     component: Details,
+    order: 5
+  },
+  {
+    path: '/add-category',
+    exact: true,
+    component: AddCategory,
     order: 5
   },
 ]

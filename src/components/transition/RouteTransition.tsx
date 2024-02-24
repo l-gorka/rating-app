@@ -23,9 +23,9 @@ const ANIMATIONS: Animations = {
     exit:{ x: '100%', opacity: 1, transition: { duration: DURATION, ease: easeInOut } }
   },
   coverRight: {
-    initial:{ y: '100%', opacity: 1 },
-    animate:{ y: 0, opacity: 1, transition: { duration: DURATION, ease: easeOut } },
-    exit:{ y: 1, opacity: 1, transition: { duration: DURATION, ease: easeInOut } }
+    initial:{ x: '100%', opacity: 1 },
+    animate:{ x: 0, opacity: 1, transition: { duration: DURATION, ease: easeOut } },
+    exit:{ x: 1, opacity: 1, transition: { duration: DURATION, ease: easeInOut } }
   },
 }
 
