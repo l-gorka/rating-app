@@ -23,6 +23,10 @@ const app = createSlice({
     setRouteAnimation: (state, action) => {
       state.routeAnimation = action.payload
     },
+    setFormData: (state, action) => {
+      console.log(action.payload)
+      state.formData = action.payload
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -65,7 +69,7 @@ export const fetchAllItems = createAsyncThunk('app/fetchAllItems', async () => {
 })
 
 export const { reducer } = app;
-export const { setUserEmail, setRouteAnimation } = app.actions;
+export const { setUserEmail, setRouteAnimation, setFormData } = app.actions;
 export default app.reducer
 
 export type IRootState = ReturnType<typeof app.reducer>

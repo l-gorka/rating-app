@@ -3,7 +3,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Form } from 'src/components/ui/Form';
 
 import { AddPhoto } from 'src/components/ui/AddPhoto';
-import { AddCategory } from 'src/components/ui/AddCategory';
 import { StarRating } from 'src/components/base/StarRating';
 import { BaseSelect } from 'src/components/base/Select';
 import { FaPlus } from 'react-icons/fa6';
@@ -14,22 +13,21 @@ import { useAppDispatch } from 'src/store/configureStore';
 
 import { useSelector } from 'react-redux';
 
-import client from 'src/api'
+import client from 'src/api';
 
-import {CreateItemInput } from 'api.ts'
+import { CreateItemInput } from 'api.ts';
 
 import { Card, CardBody, Slider, Button, Divider, Selection } from '@nextui-org/react';
 
 import RouteTransition from 'src/components/transition/RouteTransition';
 
-import { fieldsConfig } from './config';
+import { createFormData } from 'src/utils/formUtils';
 
 export const AddItem = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const [rating, setRating] = useState([3]);
-  const [modalOpen, setModalOpen] = useState(false);
   const [category, setCategory] = useState<Selection>(new Set());
   const categoriesList = useSelector((state) => state.categoriesList);
 
@@ -37,7 +35,6 @@ export const AddItem = () => {
 
   useEffect(() => {
     setIsFormDisabled(!category.size);
-
   }, [category]);
 
   const [isFormDisabled, setIsFormDisabled] = useState(true);
@@ -45,106 +42,88 @@ export const AddItem = () => {
   // const categoriesList = useSelector((state) => state.categoriesList);
 
   const handleChangeCategory = (values: Selection) => {
-    console.log(values);
     setCategoryError('');
     setCategory(values);
   };
 
   // ============================ FORM ===============================
 
-  const [formData, setFormData] = useState<any>([...fieldsConfig]);
+  const [formData, setFormData] = useState<any>([]);
 
-  const onChange = (key: string, value: string) => {
-    updateField(key, value, false);
-  }
+  useEffect(() => {
+    if (category.size) {
+      const savedData = categoriesList[[...category][0]]?.fields;
+      const newFormData = createFormData(savedData);
 
-  const onBlur = (key: string, value: string) => {
-    updateField(key, value, true);
-  }
-
-  const updateField = (key: string, value: string, isValidated: boolean) => {
-    const fieldIndex = formData.findIndex((field) => field.key === key);
-    const updatedField = {...formData[fieldIndex] };
-
-    let errorMessage = '';
-
-    if (isValidated && updatedField?.validation) {
-      errorMessage = updatedField.validation.testFunction(value);
+      setFormData(newFormData);
     }
+  }, [category]);
 
-    const updatedFormData = [...formData];
-    updatedFormData[fieldIndex] = { ...updatedField, errorMessage, value };
-    setFormData(updatedFormData);
-  }
-
-  const validateFields = () => {
-    const updatedFields = [...formData].map((field) => {
-      if (field.validation) {
-        return {
-       ...field,
-          errorMessage: field.validation.testFunction(field.value),
-        };
+  const handleChange = (key, updatedField) => {
+    const newFormData = [...formData].map((field) => {
+      if (field.key === key) {
+        return { ...field, config: updatedField };
       }
 
       return field;
-    })
+    });
 
-    setFormData(updatedFields);
-  }
+    setFormData(newFormData);
+  };
 
   // =============================== PHOTO ===============================
 
-  
   const [photo, setPhoto] = useState<File | null>(null);
   const handlePhotoUpload = (e: File) => {
     setPhoto(e);
-  }
-  
+  };
+
   // ============================ SUBMIT FORM ===============================
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = async() => {
+  const handleSubmit = async () => {
     if (!category.size) {
       setCategoryError('Please select a category');
       return;
     }
 
-    validateFields();
+    // validateFields();
 
     if (formData.some((field) => field.errorMessage)) {
       return;
     }
 
-    const itemObject: Partial<CreateItemInput> = {}
-    formData.forEach(({key, value}: {key: keyof CreateItemInput, value: string}) => itemObject[key] = value)
-
-    const categoryIndex = [...category][0]
-    itemObject.categoryItemsId = categoriesList[categoryIndex].id
-    itemObject.rating = String(rating[0])
-
+    const itemObject: Partial<CreateItemInput> = {};
+    itemObject.title = formData[0].config.value;
+    const categoryIndex = [...category][0];
+    itemObject.categoryItemsId = categoriesList[categoryIndex].id;
+    itemObject.rating = String(rating[0]);
+    
+    const fieldsArray = JSON.stringify(formData.slice(1).map((field) => ({type: field.type, config: field.config})));
+    itemObject.fieldsData = fieldsArray;
     setIsLoading(true);
 
     if (photo) {
-      itemObject.image = await uploadPhoto()
+      itemObject.image = await uploadPhoto();
     }
 
-    itemObject.type = 'Item'
+    itemObject.type = 'Item';
 
     const res = await client.graphql({
       query: createItem,
       variables: {
-        input: itemObject
-      }
+        input: itemObject,
+      },
     });
 
     setIsLoading(false);
     dispatch(fetchAllItems());
     navigate('/');
-  }
+  };
 
-  const uploadPhoto = async() => {
-    const url = 'https://api.cloudinary.com/v1_1/dgmcox/image/upload'
-    
+  const uploadPhoto = async () => {
+    const url = 'https://api.cloudinary.com/v1_1/dgmcox/image/upload';
+
     const formData = new FormData();
     formData.append('file', photo as File);
     formData.append('upload_preset', 'xhxobeys');
@@ -155,20 +134,24 @@ export const AddItem = () => {
     });
     const data = await res.json();
 
-    return data.url
-  }
+    return data.url;
+  };
 
   const location = useLocation();
 
-
   useEffect(() => {
     if (location?.state?.id) {
-      const selectedCategory = categoriesList.findIndex ((category) => category.id === location.state.id);
-      const selection = (new Set([String(selectedCategory)]) as Selection)
+      const selectedCategory = categoriesList.findIndex((category) => category.id === location.state.id);
+
+      if (selectedCategory === -1) {
+        return;
+      }
+
+      const selection = new Set([String(selectedCategory)]) as Selection;
 
       setCategory(selection);
     }
-  }, [])
+  }, []);
 
   return (
     <RouteTransition transitionKey="addItem">
@@ -212,14 +195,24 @@ export const AddItem = () => {
               errorMessage={categoryError}
               onChange={handleChangeCategory}
             />
-            <Button onClick={() => setModalOpen(true)} isIconOnly radius="sm" variant="bordered" className="h-16 w-20">
+            <Button
+              onClick={() => navigate('/add-category')}
+              isIconOnly
+              radius="sm"
+              variant="bordered"
+              className="h-16 w-20"
+            >
               <FaPlus size={20} />
             </Button>
           </div>
-          <Form config={formData} isDisabled={isFormDisabled} onBlur={onBlur} onChange={onChange} />
+          {formData.length > 0 && (
+            <div>
+              <Divider className="mx-auto my-4 w-11/12" />
+              <Form formData={formData} isDisabled={isFormDisabled} handleChange={handleChange} />
+            </div>
+          )}
         </div>
         <Divider className="mx-auto my-4 w-11/12" />
-        <AddCategory isOpen={modalOpen} onClose={() => setModalOpen(false)} />
         <div className="flex justify-center">
           <Button
             size="lg"

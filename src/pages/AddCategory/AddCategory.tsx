@@ -1,8 +1,8 @@
 import RouteTransition from 'src/components/transition/RouteTransition';
 import { Button, Input, Divider } from '@nextui-org/react';
 
-import AddSliders from 'src/components/ui/AddSliders';
-import AddTextField from 'src/components/ui/AddTextField';
+import Sliders from 'src/components/base/Sliders';
+import AddTextField from 'src/components/base/TextField';
 
 import NavBar from 'src/components/ui/NavBar';
 import { nanoid } from '@reduxjs/toolkit';
@@ -18,7 +18,7 @@ import { useNavigate } from 'react-router-dom';
 
 const slidersField = {
   type: 'slider',
-  component: AddSliders,
+  component: Sliders,
   config: [
     {
       title: '',
@@ -41,7 +41,7 @@ export default function AddCategory() {
   const handleAddSlider = () => {
     setConfig([...config, {...slidersField, key: nanoid() }]);
   };
-  const handleAddTextarea = () => {
+  const handleBaseTextArea = () => {
     setConfig([...config, {...textAreaField, key: nanoid() }]);
   };
 
@@ -150,7 +150,7 @@ export default function AddCategory() {
           })}
           <div className="flex gap-2 mt-4">
             <Button onClick={handleAddSlider}>Add Sliders</Button>
-            <Button onClick={handleAddTextarea}>Add Textarea</Button>
+            <Button onClick={handleBaseTextArea}>Add Textarea</Button>
           </div>
         </div>
         <Divider className='my-4' />

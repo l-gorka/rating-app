@@ -1,10 +1,10 @@
-import { ChangeEvent } from 'react';
 
-export const Form = ({ config, isDisabled, onChange, onBlur }) => {
+
+export const Form = ({ isDisabled, formData, handleChange}) => {
 
   return (
     <div className="flex flex-col gap-4">
-      {config.map((item) => {
+      {formData.map((item, index) => {
         return (
           <div key={item.key}>
             <item.component
@@ -12,10 +12,13 @@ export const Form = ({ config, isDisabled, onChange, onBlur }) => {
               size="lg"
               variant="bordered"
               radius="sm"
+              isEditable={false}
+              config={item.config}
               isDisabled={isDisabled}
+              isRequired={item.isRequired}
               isInvalid={!!item.errorMessage}
-              onChange={(e: ChangeEvent) => onChange(item.key, (e.target as HTMLInputElement).value, false)}
-              onBlur={(e: ChangeEvent) => onBlur(item.key, (e.target as HTMLInputElement).value, true)}
+              onConfigChange={() => {}}
+              onChange={(updatedField) => handleChange(item.key, updatedField)}
             />
           </div>
         );
