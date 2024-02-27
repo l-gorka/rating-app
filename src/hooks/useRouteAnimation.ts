@@ -18,14 +18,16 @@ export const useRouteAnimation = () => {
     });
     setTimeout(() => {
       dispatch(setRouteAnimation('left'));
-    },500)
-  }
+    }, 500);
+  };
 
   const handleLinkClick = (e: SyntheticEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
 
-    const currentPathOrder = routes.find((route) => route.path === location.pathname)?.order;
-    const targetPathOrder = routes.find((route) => route.path === href)?.order;
+    const currentPathOrder = routes.find(
+      (route) => getAnimationPath(route) === getPageFromLocation(location.pathname)
+    )?.order;
+    const targetPathOrder = routes.find((route) => getAnimationPath(route) === getPageFromLocation(href))?.order;
 
     if (href === '/add-item') {
       dispatch(setRouteAnimation('coverRight'));
@@ -43,6 +45,12 @@ export const useRouteAnimation = () => {
     navigateAndResetAnimation(href);
   };
 
-
   return { handleLinkClick };
 };
+
+const getPageFromLocation = (href: string) => {
+  const parts = href.split('/');
+  return parts.length > 2 ? `/${parts[1]}` : href;
+};
+
+const getAnimationPath = (route) => route.animationPath || route.path;
