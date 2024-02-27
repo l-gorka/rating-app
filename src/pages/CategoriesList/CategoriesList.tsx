@@ -9,9 +9,13 @@ import { IRootState } from 'src/store/reducers';
 
 import NavBar from 'src/components/ui/NavBar'
 
+import { useRouteAnimation } from 'src/hooks/useRouteAnimation';
+
 export default function CategoriesList() {
   const categoriesList = useSelector((state: IRootState) => state.categoriesList);
   const isLoading = useSelector((state: IRootState) => state.categoriesStatus === 'pending');
+
+  const { handleLinkClick } = useRouteAnimation();
   
   return (
     <RouteTransition transitionKey="catList">
@@ -20,7 +24,7 @@ export default function CategoriesList() {
       <div className='flex flex-col p-3 gap-2'>
         {categoriesList &&
           categoriesList.map((item) => (
-            <Link key={item.id} to={`/categories/${item.id}`}>
+            <Link key={item.id} to={`/category/${item.id}`} onClick={(e) => handleLinkClick(e, `/category/${item.id}`)}>
               <ItemList {...item} />
             </Link>
           ))

@@ -44,13 +44,15 @@ export const routes = [
     order: 3
   },
   {
-    path: '/categories/:id',
+    path: '/category/:id',
+    animationPath: '/category',
     exact: true,
     component: Category,
     order: 4
   },
   {
-    path: '/categories/details/:id',
+    path: '/details/:id',
+    animationPath: '/details',
     exact: true,
     component: Details,
     order: 5

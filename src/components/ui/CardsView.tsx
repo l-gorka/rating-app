@@ -11,6 +11,8 @@ import { InView } from 'react-intersection-observer';
 
 import { Item } from 'api';
 
+import { useRouteAnimation } from 'src/hooks/useRouteAnimation';
+
 export interface CardsViewProps {
   items?: Array<Item>;
   isLoading: boolean;
@@ -21,6 +23,8 @@ export type SortingType = 'date' | 'rating';
 export default function CardsView({items, isLoading}: CardsViewProps) {
   const [sorting, setSorting] = useState<SortingType>('date');
   const [query, setQuery] = useState('');
+
+  const { handleLinkClick } = useRouteAnimation();
 
   const onSearch = (query: string) => {
     setQuery(query);
@@ -66,7 +70,7 @@ export default function CardsView({items, isLoading}: CardsViewProps) {
         <div className="p-3 min-h-full grid grid-cols-2 gap-2">
           {visibleItems &&
             visibleItems.map((item) => (
-              <Link key={item.id} to={`/categories/details/${item.id}`} state={item}>
+              <Link key={item.id} to={`/details/${item.id}`} state={item} onClick={(e) => handleLinkClick(e, `/details/${item.id}`)}>
                 <ItemCard key={item.id} {...item}  />
               </Link>
             ))}
