@@ -1,11 +1,11 @@
-import { Routes, Route, useLocation, useNavigationType } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { routes, bottomNavOptions } from './config';
 
 import { AnimatePresence } from 'framer-motion';
 import BottomNav from 'src/components/ui/BottomNav';
 import { useEffect } from 'react';
 
-import { fetchCategories, fetchAllItems, setUserEmail, setRouteAnimation } from 'src/store/reducers';
+import { fetchCategories, fetchAllItems, setUserEmail } from 'src/store/reducers';
 import { useAppDispatch } from './store/configureStore';
 
 import { ToastContainer } from 'react-toastify';
@@ -24,7 +24,6 @@ Amplify.configure(config);
 export function App() {
   const location = useLocation();
   const dispatch = useAppDispatch();
-  const navigationType = useNavigationType();
 
   useEffect(() => {
     async function onAppStart() {

@@ -16,6 +16,8 @@ import { generateClient } from 'aws-amplify/api';
 import { createCategory } from 'src/graphql/mutations';
 import { useNavigate } from 'react-router-dom';
 
+import {  toast } from 'react-toastify';
+
 const slidersField = {
   type: 'slider',
   component: Sliders,
@@ -38,6 +40,8 @@ const textAreaField = {
 export default function AddCategory() {
   const [config, setConfig] = useState([]);
 
+
+
   const handleAddSlider = () => {
     setConfig([...config, {...slidersField, key: nanoid() }]);
   };
@@ -47,7 +51,6 @@ export default function AddCategory() {
 
   const onFieldRemove = (index) => {
     const updatedConfig = [...config].filter((_, i) => i !== index);
-    console.log('on field remove category', updatedConfig)
     setConfig(updatedConfig);
   };
 
@@ -102,10 +105,9 @@ export default function AddCategory() {
 
       await dispatch(fetchCategories());
       setIsLoading(false);
+      toast.success(`${state.name} category created successfully`);
 
       navigate('/add-item', {state: {id: res.data.createCategory.id}});
-
-      console.log(res);
     } catch (err) {
       console.log(err);
       setIsLoading(false);
@@ -123,7 +125,6 @@ export default function AddCategory() {
             id="add-category-name"
             variant="bordered"
             label="Name"
-            placeholder="Enter category name"
             labelPlacement="inside"
             required
             value={state.name}
@@ -142,7 +143,8 @@ export default function AddCategory() {
                 <item.component
                   config={item.config}
                   index={index}
-                  onConfigChange={(e) => onConfigChange(e, index)}
+                  isEditable={true}
+                  onChange={(e) => onConfigChange(e, index)}
                   onFieldRemove={() => onFieldRemove(index)}
                 />
               </div>
@@ -161,6 +163,7 @@ export default function AddCategory() {
             variant="bordered"
             color="warning"
             radius="sm"
+            isDisabled={!state.name.length || !!state.error}
             isLoading={isLoading}
             onClick={handleSave}
           >

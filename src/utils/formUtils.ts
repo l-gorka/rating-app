@@ -3,7 +3,7 @@ import Sliders from 'src/components/base/Sliders';
 import BaseTextArea from 'src/components/base/TextField';
 import { BaseInput } from 'src/components/base/BaseInput';
 
-const componentsMap = {
+export const componentsMap = {
   slider: Sliders,
   textarea: BaseTextArea,
   textfield: BaseInput,
