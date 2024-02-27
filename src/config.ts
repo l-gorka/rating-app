@@ -1,10 +1,13 @@
 import { RiHome5Line } from 'react-icons/ri';
 import { TbCategoryPlus } from 'react-icons/tb';
-import { FaRegUserCircle } from 'react-icons/fa';
+import { FiPlusCircle } from "react-icons/fi";
 
 import Home from './pages/Home/Home';
-import Categories from './pages/Categories/Categories';
-import User from './pages/User/User';
+import CategoriesList from 'src/pages/CategoriesList/CategoriesList';
+import Category from 'src/pages/Category/Category';
+import Details from 'src/pages/Details/Details';
+import AddCategory from './pages/AddCategory/AddCategory';
+import { AddItem } from 'src/pages/AddItem/AddItem';
 
 export const bottomNavOptions = [
   {
@@ -12,12 +15,12 @@ export const bottomNavOptions = [
     href: '/',
   },
   {
-    component: TbCategoryPlus,
-    href: '/categories',
+    component: FiPlusCircle,
+    href: '/add-item',
   },
   {
-    component: FaRegUserCircle,
-    href: '/user',
+    component: TbCategoryPlus,
+    href: '/categories',
   },
 ]
 
@@ -26,15 +29,36 @@ export const routes = [
     path: '/',
     exact: true,
     component: Home,
+    order: 1
+  },
+  {
+    path: '/add-item',
+    exact: true,
+    component: AddItem,
+    order: 2
   },
   {
     path: '/categories',
     exact: true,
-    component: Categories,
+    component: CategoriesList,
+    order: 3
   },
   {
-    path: '/user',
+    path: '/categories/:id',
     exact: true,
-    component: User,
-  }
+    component: Category,
+    order: 4
+  },
+  {
+    path: '/categories/details/:id',
+    exact: true,
+    component: Details,
+    order: 5
+  },
+  {
+    path: '/add-category',
+    exact: true,
+    component: AddCategory,
+    order: 5
+  },
 ]

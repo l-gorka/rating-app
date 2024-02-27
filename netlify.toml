@@ -1,0 +1,9 @@
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  force = false
+
+[[redirects]]
+from = "/login"
+to = "https://release-0-1--monumental-salmiakki-c69c51.netlify.app/login"

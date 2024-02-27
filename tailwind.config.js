@@ -11,9 +11,6 @@ export default {
   ],
   theme: {
     extend: {},
-    colors: {
-      'black': '1c1c1c1'
-    }
   },
   plugins: [nextui()],
 }
