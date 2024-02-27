@@ -3,7 +3,8 @@ import { LuTrash } from 'react-icons/lu';
 
 export default function BaseTextArea({ onChange, onFieldRemove, isEditable, config }) {
   const handleChange = (e) => {
-    onChange({...config, value: e })
+    const valuePropety = isEditable? 'label' : 'value'
+    onChange({...config, [valuePropety]: e })
   }
   return (
     <>

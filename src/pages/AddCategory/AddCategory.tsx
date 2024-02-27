@@ -33,14 +33,12 @@ const textAreaField = {
   type: 'textarea',
   component: AddTextField,
   config: {
-    title: '',
+    label: '',
   },
 };
 
 export default function AddCategory() {
   const [config, setConfig] = useState([]);
-
-
 
   const handleAddSlider = () => {
     setConfig([...config, {...slidersField, key: nanoid() }]);
@@ -91,7 +89,7 @@ export default function AddCategory() {
     setIsLoading(true);
 
     const parsedConfig = parseConfig(config);
-    
+    console.log(parsedConfig);
     try {
       const res = await client.graphql({
         query: createCategory,
