@@ -64,6 +64,6 @@
     "adminQueries": false,
     "thirdPartyAuth": false,
     "authProviders": [],
-    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"http://localhost:5173/\",\"http://localhost:5173/\",\"https://amplify-rest.d3j3p8t0hlnkqm.amplifyapp.com\",\"https://main.d3j3p8t0hlnkqm.amplifyapp.com/\"],\"LogoutURLs\":[\"http://localhost:5173/\",\"http://localhost:5173/callback/\",\"http://localhost:5173/callback/\",\"https://amplify-rest.d3j3p8t0hlnkqm.amplifyapp.com/\",\"https://main.d3j3p8t0hlnkqm.amplifyapp.com/\"]}"
+    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"http://localhost:5173\",\"http://localhost:5173/\",\"https://amplify-rest.d3j3p8t0hlnkqm.amplifyapp.com\",\"https://main.d3j3p8t0hlnkqm.amplifyapp.com/\"],\"LogoutURLs\":[\"http://localhost:5173\",\"http://localhost:5173/callback/\",\"http://localhost:5173/callback/\",\"https://amplify-rest.d3j3p8t0hlnkqm.amplifyapp.com/\",\"https://main.d3j3p8t0hlnkqm.amplifyapp.com/\"]}"
   }
 }
