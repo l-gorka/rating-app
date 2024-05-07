@@ -1,17 +1,12 @@
 import { Button, Card, Slider } from '@nextui-org/react';
-import { p } from 'node_modules/msw/lib/core/GraphQLHandler-907fc607';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { FaPlus } from 'react-icons/fa';
 import { IoIosClose } from 'react-icons/io';
 
 interface AddSlider extends React.Component {
   onConfigChange: (e: any) => void;
   onFieldRemove: () => void;
-}
-
-interface SliderConfig {
-  title?: string;
-  color?: string;
+  index: number
 }
 
 const colors = ['default', 'secondary', 'success', 'warning', 'danger'];
@@ -22,6 +17,7 @@ export default function Sliders({ onChange, onFieldRemove, isEditable, config }:
 
   const handleInput = (e, index) => {
     const updatedConfig = [...config].map((item, i) => ({ ...item, title: i === index ? e.target.value : item.title }));
+
     onChange(updatedConfig);
   };
 
@@ -33,6 +29,7 @@ export default function Sliders({ onChange, onFieldRemove, isEditable, config }:
     } else {
       updatedConfig = [...config].map((item, i) => ({ ...item, value: i === index ? e[0] : item?.value }));
     }
+
     onChange(updatedConfig);
   };
 
@@ -48,11 +45,13 @@ export default function Sliders({ onChange, onFieldRemove, isEditable, config }:
   useEffect(() => {
     if (isEditable && config.length === 0) {
       onFieldRemove();
+
       return;
     }
 
     onChange(config);
   }, [config]);
+
   return (
     <>
       <Card className="p-2" radius="sm">

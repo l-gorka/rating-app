@@ -1,11 +1,21 @@
 import { Button, Card, Textarea } from '@nextui-org/react';
 import { LuTrash } from 'react-icons/lu';
 
-export default function BaseTextArea({ onChange, onFieldRemove, isEditable, config }) {
+import { InnerFieldConfig} from 'src/pages/AddCategory/AddCategory'
+
+type TextFieldProps = {
+  config: InnerFieldConfig[];
+  isEditable: boolean;
+  onChange: (e: any) => void;
+  onFieldRemove: () => void;
+}
+
+export default function BaseTextArea({ onChange, onFieldRemove, isEditable, config }: TextFieldProps) {
   const handleChange = (e) => {
     const valuePropety = isEditable? 'label' : 'value'
     onChange({...config, [valuePropety]: e })
   }
+  
   return (
     <>
       {isEditable ? (

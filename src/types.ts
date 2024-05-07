@@ -18,3 +18,13 @@ export interface Category {
   image: string;
   items: Item[];
 }
+
+const colors = ['default', 'secondary', 'success', 'warning', 'danger'] as const;
+
+export type Color = typeof colors[number];
+
+export interface SliderConfig {
+  title: string;
+  color: Color;
+  value: number;
+}

@@ -11,8 +11,8 @@ export const ItemCard = ({
   rating,
 }: {
   title: string;
-  image?: string;
-  rating?: number;
+  image?: string | null;
+  rating?: string;
 }) => {
   const [cardDimensions, setCardDimensions] = useState<number>(100)
   const card = useRef<HTMLDivElement>(null);
