@@ -139,9 +139,6 @@ export default function AddCategory() {
   return (
     <RouteTransition transitionKey="catList">
       <NavBar title="Add Category" />
-      <p className={{
-        'px-4': true
-      }}>asd</p>
       <main className="p-4">
         <div className="h-20 grid place-items-center">
           <Input
